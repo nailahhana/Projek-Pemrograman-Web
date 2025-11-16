@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress Diet - Plan diet suksesmu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-10">
+    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <h1 class="text-2xl font-bold text-green-600">Dietly</h1>
+
+      <button class="block md:hidden text-2xl">☰</button>
+
+      <ul class="hidden md:flex md:space-x-6 font-medium md:flex-row">
+        <li><a href="index.html" class="block px-4 py-2 hover:text-green-600">Beranda</a></li>
+        <li><a href="profile.html" class="block px-4 py-2 hover:text-green-600">Profil Pengguna</a></li>
+        <li><a href="progres.html" class="block px-4 py-2 text-green-600 font-semibold">Progress</a></li>
+        <li><a href="resep.html" class="block px-4 py-2 hover:text-green-600">Resep Makanan</a></li>
+        <li><a href="index.html#testimoni" class="block px-4 py-2 hover:text-green-600">Testimoni</a></li>
+      </ul>
+
+      <button class="hidden md:block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Logout</button>
+    </div>
+  </nav>
+
+  <section class="pt-28 pb-10 max-w-5xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-6 text-center">Progress Diet Kamu</h2>
+
+    <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+      <h3 class="text-xl font-semibold mb-2">Program Diet Kamu</h3>
+      <p><strong>Plan:</strong> Defisit kalori, tinggi protein & serat</p>
+      <p><strong>Goal:</strong> — (Belum dipilih)</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+      <h3 class="text-xl font-semibold mb-3">Pilih Goal Akhir Kamu</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <button class="border rounded-xl p-4 hover:bg-green-100">Muscular</button>
+        <button class="border rounded-xl p-4 hover:bg-green-100">Bulky</button>
+        <button class="border rounded-xl p-4 hover:bg-green-100">Atletis</button>
+        <button class="border rounded-xl p-4 hover:bg-green-100">Lean</button>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md mb-6">
+      <h3 class="text-xl font-semibold mb-3">Tracking Harian</h3>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold mb-2">📸 Upload Bukti Olahraga</h4>
+          <input type="file" class="w-full border p-2 rounded-lg" />
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-2">🍱 Upload Foto Makanan</h4>
+          <input type="file" class="w-full border p-2 rounded-lg" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Tanggal</label>
+          <input type="date" class="w-full border rounded px-3 py-2"/>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Berat (kg)</label>
+          <input type="number" class="w-full border rounded px-3 py-2"/>
+        </div>
+
+        <div class="md:col-span-2 text-right">
+          <button class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700">Tambah Aktivitas Hari Ini</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-emerald-50 p-6 rounded-2xl shadow-inner">
+      <h2 class="font-semibold mb-3">Ringkasan Progress</h2>
+      <div class="mb-3">
+        <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+          <div class="bg-emerald-500 h-4 w-[40%] transition-all"></div>
+        </div>
+        <div class="mt-2 text-sm text-gray-600">Progress: 40% — 12 hari dari 30 hari program</div>
+      </div>
+      <div class="text-sm text-gray-700"><strong>Goal:</strong> — <br/><strong>Method:</strong> — <br/><strong>Plan (profile):</strong> —</div>
+    </div>
+  </section>
+
+  <footer class="bg-gray-900 text-white py-6 text-center mt-10">
+    <p>© 2025 Dietly. Semua Hak Dilindungi. (Belum pake JS)</p>
+  </footer>
+
+</body>
+</html>

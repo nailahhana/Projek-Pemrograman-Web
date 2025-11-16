@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dietly - Plan diet suksesmu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+    .carousel-card{transition:transform .3s, opacity .3s;}
+  </style>
+</head>
+<body class="bg-[linear-gradient(0deg,#f8fafc,white)]">
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 bg-white/60 backdrop-blur z-20 shadow-sm">
+    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-md bg-gradient-to-br from-emerald-200 to-cyan-200 flex items-center justify-center font-bold text-cyan-800">D</div>
+        <div class="font-semibold text-slate-800">Dietly</div>
+      </div>
+
+      <!-- Desktop menu -->
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#home" class="hover:text-slate-600">Beranda</a>
+        <a href="#fitur" class="hover:text-slate-600">Fitur</a>
+        <a href="#testimoni" class="hover:text-slate-600">Testimoni</a>
+        <a href="profile.html" class="hover:text-slate-600">Profil Pengguna</a>
+        <a href="progres.html" class="hover:text-slate-600">Progress</a>
+        <a href="resep.html" class="hover:text-slate-600">Resep Makanan</a>
+        <a href="#auth" class="px-3 py-1 rounded bg-emerald-600 text-white">Login / Sign Up</a>
+      </nav>
+
+      <!-- Mobile button (belum bisa dipakai) -->
+      <div class="md:hidden">
+        <button class="px-3 py-2 bg-emerald-600 text-white rounded">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-24">
+    <!-- HERO -->
+    <section id="home" class="pt-6">
+      <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-8">
+        <div class="flex-1">
+          <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight">Mulai Perjalanan Sehatmu dengan Cara yang Fun ✨</h1>
+          <p class="mt-4 text-slate-600">Dietly bantu kamu rancang pola makan, catat progress, dan kasih rekomendasi diet berdasarkan BMI — gampang, ramah, dan cocok buat rutinitas sehari-hari.</p>
+          <div class="mt-6 flex gap-3 flex-wrap">
+            <a href="#auth" class="px-5 py-2 rounded bg-emerald-600 text-white font-semibold">Sign Up</a>
+            <a href="#features" class="px-5 py-2 rounded border border-emerald-600 text-emerald-600">Lihat Fitur</a>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="w-full max-w-md mx-auto md:mx-0">
+            <img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=9b2d9b3f1d2d3a2f" alt="illustration" class="rounded-xl shadow-lg" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FITUR -->
+    <section id="fitur" class="py-16">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-8">Fitur Utama</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <a href="profile.html" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold">Profil Pengguna & BMI</h3>
+            <p class="mt-2 text-slate-600">Isi nama, umur, tinggi, berat — kalkulasi BMI & rekomendasi plan diet otomatis.</p>
+            <div class="mt-4 text-sm text-emerald-600 font-medium">Buka fitur →</div>
+          </a>
+
+          <a href="progres.html" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold">Progress Tracker</h3>
+            <p class="mt-2 text-slate-600">Catat berat harian, upload bukti, dan pantau persentase progres program dietmu.</p>
+            <div class="mt-4 text-sm text-emerald-600 font-medium">Buka fitur →</div>
+          </a>
+
+          <a href="resep.html" class="block bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+            <h3 class="text-xl font-semibold">Resep & Ide Menu</h3>
+            <p class="mt-2 text-slate-600">Kumpulan resep & ide menu yang sesuai dengan target kalori dan protein.</p>
+            <div class="mt-4 text-sm text-emerald-600 font-medium">Buka fitur →</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONI -->
+    <section id="testimoni" class="py-16">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-2xl font-bold mb-6">Apa Kata Mereka</h2>
+        <div class="flex flex-col md:flex-row gap-6 items-stretch justify-center">
+          <div class="w-full md:w-80 p-6 rounded-2xl bg-white shadow-lg text-left">
+            <div class="flex items-center gap-4">
+              <img src="LAHAR.jpeg" class="w-14 h-14 rounded-full border" alt="user" />
+              <div>
+                <div class="font-semibold">Lahar</div>
+                <div class="text-sm text-slate-500">Pengguna Dietly</div>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-700">Dietly bantu aku konsisten! Dalam 2 bulan turun 4 kg.</p>
+          </div>
+
+          <div class="w-full md:w-80 p-6 rounded-2xl bg-white shadow-lg text-left">
+            <div class="flex items-center gap-4">
+              <img src="NOPAL.jpeg" class="w-14 h-14 rounded-full border" alt="user" />
+              <div>
+                <div class="font-semibold">Nopal</div>
+                <div class="text-sm text-slate-500">Pengguna Dietly</div>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-700">Fitur progressnya gampang dipakai, recommended.</p>
+          </div>
+
+          <div class="w-full md:w-80 p-6 rounded-2xl bg-white shadow-lg text-left">
+            <div class="flex items-center gap-4">
+              <img src="ARYA.jpeg" class="w-14 h-14 rounded-full border" alt="user" />
+              <div>
+                <div class="font-semibold">Arya</div>
+                <div class="text-sm text-slate-500">Pengguna Dietly</div>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-700">Fitur nya ngejaga motivasi gw, biar tetep konsisten dengan plan dietnya.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTH -->
+    <section id="auth" class="py-10">
+      <div class="max-w-3xl mx-auto px-6">
+        <div class="bg-white p-6 rounded-2xl shadow">
+          <div class="flex gap-4 items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold">Login / Sign Up</h3>
+            <div class="text-sm text-slate-500">Ini belum kepake karna belum ada database</div>
+          </div>
+          <input placeholder="Nama (opsional untuk signup)" class="w-full p-2 rounded border mb-2" />
+          <input placeholder="Email (untuk demo)" class="w-full p-2 rounded border mb-2" />
+          <div class="flex gap-2">
+            <button class="px-4 py-2 bg-emerald-600 text-white rounded">Buat Akun</button>
+            <button class="px-4 py-2 bg-emerald-600 text-white rounded">Login</button>
+            <div class="text-xs text-slate-500 self-center">(Belom menyimpan apa-apa)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 bg-white mt-8">
+      <div class="max-w-6xl mx-auto px-6 text-center text-slate-600">© 2025 Dietly — Belom pake javascript.</div>
+    </footer>
+  </main>
+</body>
+</html>

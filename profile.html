@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Profil Pengguna - Plan diet suksesmu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- NAVBAR (static) -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-30">
+    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-md bg-gradient-to-br from-emerald-200 to-cyan-200 flex items-center justify-center font-bold text-cyan-800">D</div>
+        <div class="font-bold">Dietly</div>
+      </div>
+
+      <button class="md:hidden text-2xl">☰</button>
+
+      <ul class="hidden md:flex items-center gap-6">
+        <li><a href="index.html" class="hover:text-emerald-600">Beranda</a></li>
+        <li><a href="index.html#fitur" class="hover:text-emerald-600">Fitur</a></li>
+        <li><a href="index.html#testimoni" class="hover:text-emerald-600">Testimoni</a></li>
+        <li><a href="index.html#auth" class="px-3 py-1 rounded bg-emerald-600 text-white">Login / Sign Up</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="pt-28 max-w-4xl mx-auto px-4 pb-12">
+    <h1 class="text-3xl font-bold text-center mb-6">Profil Pengguna</h1>
+
+    <section class="bg-white p-6 rounded-2xl shadow mb-6">
+      <h2 class="font-semibold mb-3">Isi Data Diri</h2>
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Nama</label>
+          <input class="w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Tanggal Lahir</label>
+          <input type="date" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Berat Badan (kg)</label>
+          <input type="number" min="20" max="300" class="w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Tinggi Badan (cm)</label>
+          <input type="number" min="80" max="250" class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div class="md:col-span-2 text-right mt-2">
+          <button type="button" class="bg-emerald-600 text-white px-5 py-2 rounded hover:bg-emerald-700">Simpan & Lihat Plan Diet</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="bg-emerald-50 p-6 rounded-2xl shadow-inner">
+      <h2 class="font-semibold mb-3">Hasil Analisis & Rekomendasi</h2>
+      <p><strong>Nama:</strong> <span>-</span></p>
+      <p><strong>Usia:</strong> <span>-</span></p>
+      <p><strong>BMI:</strong> <span>-</span></p>
+      <p><strong>Kategori:</strong> <span>-</span></p>
+      <p class="mt-2"><strong>Plan Diet Awal:</strong> <span>-</span></p>
+
+      <div class="mt-4 flex gap-3">
+        <a href="progres.html" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700">Lanjut ke Progress</a>
+        <button class="bg-white border px-4 py-2 rounded">SAVE</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-900 text-white py-6 text-center">
+    © Dietly — demo (Belum pake JS)
+  </footer>
+
+</body>
+</html>
