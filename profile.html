@@ -78,19 +78,84 @@
       <p><strong>Usia:</strong> <span>-</span></p>
       <p><strong>BMI:</strong> <span>-</span></p>
       <p><strong>Kategori:</strong> <span>-</span></p>
-      <p class="mt-2"><strong>Goal:</strong> <span>-</span></p>
-      <p class="mt-2"><strong>Plan Diet:</strong> <span>-</span></p>
 
+      <!-- START PILIHAN GOAL-->
+      <el-dropdown class="inline-block">
+        <p class="mt-2 text-xl"><strong>Goal : </strong></p>
+  <button class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white/10 px-3 py-2 text-xl font-semibold text-black inset-ring-1 inset-ring-green/5 hover:bg-gray/20">
+    Options
+    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="-mr-1 size-5 text-gray-400">
+      <path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+    </svg>
+  </button>
+
+  <el-menu anchor="bottom start" popover class="w-56 origin-top-right rounded-md bg-gray-200 outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+    <div class="py-1">
+      <a href="#" class="block px-4 py-2 text-md text-white-300 focus:bg-white/5 focus:text-green-600 focus:outline-hidden">Lean</a>
+      <a href="#" class="block px-4 py-2 text-md text-white-300 focus:bg-white/5 focus:text-green-600 focus:outline-hidden">Bulky</a>
+      <a href="#" class="block px-4 py-2 text-md text-white-300 focus:bg-white/5 focus:text-green-600 focus:outline-hidden">Atletis</a>
+      <a href="#" class="block px-4 py-2 text-md text-white-300 focus:bg-white/5 focus:text-green-600 focus:outline-hidden">Muscular</a>
+      <form action="#" method="POST">
+        <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-300 focus:bg-white/5 focus:text-white focus:outline-hidden">Sign out</button>
+      </form>
+    </div>
+  </el-menu>
+</el-dropdown>
+
+      <!--INI PILIHAN PLAN DIET--> 
+      <h2 class="text-xl font-bold mt-4 mb-6">Plan diet :</h2>
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        
+        <div class="flex flex-col md:flex-row gap-6 items-stretch justify-center">
+          <div class="w-full md:w-80 p-6 rounded-2xl bg-white shadow-lg text-left">
+            <div class="flex items-center gap-4">
+              <img src="LAHAR.jpeg" class="w-14 h-14 rounded-full border" alt="user" />
+              <div>
+                <div class="font-semibold">Lahar</div>
+                <div class="text-sm text-slate-500">Pengguna Dietly</div>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-700">Dietly bantu aku konsisten! Dalam 2 bulan turun 4 kg.</p>
+          </div>
+
+          <div class="w-full md:w-80 p-6 rounded-2xl bg-white shadow-lg text-left">
+            <div class="flex items-center gap-4">
+              <img src="NOPAL.jpeg" class="w-14 h-14 rounded-full border" alt="user" />
+              <div>
+                <div class="font-semibold">Nopal</div>
+                <div class="text-sm text-slate-500">Pengguna Dietly</div>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-700">Fitur progressnya gampang dipakai, recommended.</p>
+          </div>
+
+          <div class="w-full md:w-80 p-6 rounded-2xl bg-white shadow-lg text-left">
+            <div class="flex items-center gap-4">
+              <img src="ARYA.jpeg" class="w-14 h-14 rounded-full border" alt="user" />
+              <div>
+                <div class="font-semibold">Arya</div>
+                <div class="text-sm text-slate-500">Pengguna Dietly</div>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-700">Fitur nya ngejaga motivasi gw, biar tetep konsisten dengan plan dietnya.</p>
+          </div>
+        </div>
+      </div>
+   
       <div class="mt-4 flex gap-3">
         <a href="progres.html" class="inline-block bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700">Lanjut ke Progress</a>
         <button class="bg-white border px-4 py-2 rounded">SAVE</button>
       </div>
+    
     </section>
+   
+      
   </main>
 
   <footer class="bg-gray-900 text-white py-6 text-center">
     © Dietly — demo (Belum pake JS)
   </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
 </body>
 </html>
