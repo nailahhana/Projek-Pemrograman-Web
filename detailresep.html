@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Resep & Ide Menu - Plan diet suksesmu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}</style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+
+
+  <!-- NAVBAR -->
+   <header class="fixed top-0 left-0 right-0 bg-white/60 backdrop-blur z-20 shadow-sm">
+  <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <h1 class="ml-3 text-2xl font-bold text-green-600 cursor:pointer"><a href="index.html">Dietly</a></h1>
+    </div>
+
+    <!--TOMBOL HAMBURGER (mobile only) -->
+    <label for="nav-toggle" class="md:hidden cursor-pointer px-3 py-2 border rounded font-bold text-green-600">
+      ☰
+    </label>
+    <input type="checkbox" id="nav-toggle" class="hidden peer" />
+
+    <!-- NAV MENU -->
+    <nav class="flex flex-col absolute top-[64px] right-4 bg-white shadow-md rounded-xl p-5 gap-3 text-slate-700
+                w-48 opacity-0 pointer-events-none scale-95 transition-all duration-200
+                peer-checked:opacity-100 peer-checked:pointer-events-auto peer-checked:scale-100
+                md:static md:flex-row md:p-0 md:bg-transparent md:shadow-none md:w-auto md:opacity-100 md:pointer-events-auto md:scale-100 md:items-center md:ml-auto">
+
+      <a href="index.html" class="px-4 py-2 hover:text-green-600">Beranda</a>
+      <a href="profile.html" class="px-4 py-2 hover:text-green-600">Profil Pengguna</a>
+      <a href="progres.html" class="px-4 py-2 hover:text-green-600">Progress</a>
+      <a href="resep.html" class="px-4 py-2 text-green-600 font-semibold">Resep Makanan</a>
+      <a href="index.html#testimoni" class="px-4 py-2 hover:text-green-600">Testimoni</a>
+      <a href="index.html#auth"class=" bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">
+      Logout</a>
+    </nav>
+
+  </div>
+</header>
+
+
+ <main class="pt-28 max-w-6xl mx-auto px-4 pb-12 flex-1">
+    <h1 class="text-3xl font-bold text-center mb-6">Resep & Ide Menu</h1>
+
+    <section class="bg-white p-6 rounded-2xl shadow mb-6">
+      <div class="flex flex-col ">
+        <h2 class="font-bold text-2xl mb-8">Resep Salad Ayam Panggang</h2>  
+        <img src="https://img-global.cpcdn.com/recipes/d0332d1d08549744/600x852cq80/salad-ayam-panggang-kecap-pedas-dengan-wortel-dan-sayur-lain-buatnya-simpel-sederhana-untuk-diet-foto-resep-utama.webp" alt="">
+        <p class="text-sm text-slate-600 mt-4 mb-4">Resep yang ditampilkan akan menyesuaikan dengan profil dan program dietmu. Jika belum punya program, tentukan program dietmu di Menu <span class="text-green-600 underline"><a href="profile.html"> profil pengguna.</a></span></p>
+        <h2 class="font-bold text-xl">Bahan yang dibutuhkan : </h2>
+            <h3 class="font-bold">Ayam panggang :</h3>
+        <ul>
+            <li>1. Sebuah dada ayam</li>
+            <li>2. 1sdt Kecap manis</li>
+            <li>3. 1 buah cabai rawit (sesuai selera)</li>
+            <li>4. 1/2 sdt Kaldu jamur</li>
+            <li>5. 1/4 sdt garam</li>
+            <li>6. 1/8 sdt merica</li>
+        </ul>
+        <h3 class="font-bold mt-2">Salad Sayuran : </h3>
+        <ul>
+            <li>1. 1 genggam selada</li>
+            <li>2. 1 genggam kol ungu</li>
+            <li>3. 1 genggam jagung manis</li>
+            <li>4. 1/2 genggam wortel</li>
+            <li>5. 1/2 genggam biji labu panggang</li>
+            <li>6. 2 sdm mayonaise wijen sangrai merk kewpie</li>
+        </ul>
+        <h2 class="font-bold text-xl mt-4 mb-2">Langkah-langkah : </h2>
+        <ul>
+            <li>1. Siapkan primadona kita si sayur tanpa daun a.k.a wortel. Iris korek.</li>
+            <li>2. Siapkan bahan lainnya. Iris tipis dada menjadi 3 bagian. Utuh juga gpp si, tapi saya lebih suka dibelah gini agar bumbu lebih meresap semua dan matangnya rata. Potong-potong selada dan kol. Rebus jagung dan wortel</li>
+            <li>3. Campurkan semua bumbu untuk ayam. Oleskan ke atas ayam. Marinasi minimal 30 menit. Kalau saya biasanya prepare ini di malam hari, lalu masukkan ke kontainer rapat lalu biarkan semalamam di chiller.</li>
+            <li>4. Di pagi harinya, saya tinggal panggang. Boleh tanpa minyak (selama yakin frypan nya anti lengket dan sudah panas) atau bisa juga ditambah 1 sdm olive oil.</li>
+            <li>5. Campurkan sayuran dan ayamnya. Siram dengan mayo wijen sangrai.</li>
+            <li>6. Selamat makan, jangan lupa makan buah juga yaaa.</li>
+        </ul>
+
+      </div>
+        </section>
+  </main>
+
+<footer class="bg-gray-900 text-white py-6 text-center">
+    © Dietly — demo (belum pake JS)
+</footer>
+
+</body>
+</html>
