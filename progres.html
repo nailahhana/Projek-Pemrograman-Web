@@ -10,23 +10,37 @@
 <body class="bg-gray-50 text-gray-800">
 
   <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-10">
-    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
-      <h1 class="text-2xl font-bold text-green-600">Dietly</h1>
+   <header class="fixed top-0 left-0 right-0 bg-white/60 backdrop-blur z-20 shadow-sm">
+  <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
 
-      <button class="block md:hidden text-2xl">☰</button>
-
-      <ul class="hidden md:flex md:space-x-6 font-medium md:flex-row">
-        <li><a href="index.html" class="block px-4 py-2 hover:text-green-600">Beranda</a></li>
-        <li><a href="profile.html" class="block px-4 py-2 hover:text-green-600">Profil Pengguna</a></li>
-        <li><a href="progres.html" class="block px-4 py-2 text-green-600 font-semibold">Progress</a></li>
-        <li><a href="resep.html" class="block px-4 py-2 hover:text-green-600">Resep Makanan</a></li>
-        <li><a href="index.html#testimoni" class="block px-4 py-2 hover:text-green-600">Testimoni</a></li>
-      </ul>
-
-      <button class="hidden md:block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Logout</button>
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <h1 class="ml-3 text-2xl font-bold text-green-600 cursor:pointer"><a href="index.html">Dietly</a></h1>
     </div>
-  </nav>
+
+    <!--TOMBOL HAMBURGER (mobile only) -->
+    <label for="nav-toggle" class="md:hidden cursor-pointer px-3 py-2 border rounded font-bold text-green-600">
+      ☰
+    </label>
+    <input type="checkbox" id="nav-toggle" class="hidden peer" />
+
+    <!-- NAV MENU -->
+    <nav class="flex flex-col absolute top-[64px] right-4 bg-white shadow-md rounded-xl p-4 gap-3 text-slate-700
+                w-48 opacity-0 pointer-events-none scale-95 transition-all duration-200
+                peer-checked:opacity-100 peer-checked:pointer-events-auto peer-checked:scale-100
+                md:static md:flex-row md:p-0 md:bg-transparent md:shadow-none md:w-auto md:opacity-100 md:pointer-events-auto md:scale-100 md:items-center md:ml-auto">
+
+      <a href="index.html" class="px-4 py-2 hover:text-green-600">Beranda</a>
+      <a href="profile.html" class="px-4 py-2 hover:text-green-600">Profil Pengguna</a>
+      <a href="progres.html" class="px-4 py-2 text-green-600 font-semibold">Progress</a>
+      <a href="resep.html" class="px-4 py-2 hover:text-green-600">Resep Makanan</a>
+      <a href="index.html#testimoni" class="px-4 py-2 hover:text-green-600">Testimoni</a>
+      <a href="index.html#auth"class=" bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">
+      Logout</a>
+    </nav>
+
+  </div>
+</header>
 
   <section class="pt-28 pb-10 max-w-5xl mx-auto px-4">
     <h2 class="text-3xl font-bold mb-6 text-center">Progress Diet Kamu</h2>
