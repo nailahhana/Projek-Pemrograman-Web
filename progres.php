@@ -1,8 +1,30 @@
 <?php
+session_start();
 include 'koneksi.php';
 
-// Simulasi data - nanti bisa diambil dari database
-$goal = "Muscular"; // Bisa diambil dari session/database user
+// Ambil email dari session (sesuaikan dengan sistem login kamu)
+$email = $_SESSION['email'] ?? 'user@example.com'; // Ganti dengan email dari session
+
+// Ambil data user
+$query_user = "SELECT * FROM pengguna WHERE email = ?";
+$stmt = $conn->prepare($query_user);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+$goal = $user['goal'] ?? 'Muscular';
+
+// Hitung jumlah hari yang sudah di-track dari tabel progres
+$query = "SELECT COUNT(DISTINCT tanggal) as total_days FROM progres WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$total_days_tracked = $row['total_days'];
+
+// Hitung persentase dari 180 hari
+$target_days = 180;
+$progress_percentage = min(100, round(($total_days_tracked / $target_days) * 100, 1));
 ?>
 
 <!DOCTYPE html>
@@ -17,57 +39,65 @@ $goal = "Muscular"; // Bisa diambil dari session/database user
 <body class="bg-gray-50 text-gray-800">
 
   <!-- NAVBAR -->
-   <header class="fixed top-0 left-0 right-0 bg-white/60 backdrop-blur z-20 shadow-sm">
-  <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
-
-    <!-- Logo -->
-    <div class="flex items-center gap-3">
-      <h1 class="ml-3 text-2xl font-bold text-green-600 cursor:pointer"><a href="index.html">Dietly</a></h1>
+  <header class="fixed top-0 left-0 right-0 bg-white/60 backdrop-blur z-20 shadow-sm">
+    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <div class="flex items-center gap-3">
+        <h1 class="ml-3 text-2xl font-bold text-green-600 cursor:pointer"><a href="index.html">Dietly</a></h1>
+      </div>
+      <label for="nav-toggle" class="md:hidden cursor-pointer px-3 py-2 border rounded font-bold text-green-600">☰</label>
+      <input type="checkbox" id="nav-toggle" class="hidden peer" />
+      <nav class="flex flex-col absolute top-[64px] right-4 bg-white shadow-md rounded-xl p-4 gap-3 text-slate-700
+                  w-48 opacity-0 pointer-events-none scale-95 transition-all duration-200
+                  peer-checked:opacity-100 peer-checked:pointer-events-auto peer-checked:scale-100
+                  md:static md:flex-row md:p-0 md:bg-transparent md:shadow-none md:w-auto md:opacity-100 md:pointer-events-auto md:scale-100 md:items-center md:ml-auto">
+        <a href="index.html" class="px-4 py-2 hover:text-green-600">Beranda</a>
+        <a href="profile.html" class="px-4 py-2 hover:text-green-600">Profil Pengguna</a>
+        <a href="progres.php" class="px-4 py-2 text-green-600 font-semibold">Progress</a>
+        <a href="resep.html" class="px-4 py-2 hover:text-green-600">Resep Makanan</a>
+        <a href="index.html#testimoni" class="px-4 py-2 hover:text-green-600">Testimoni</a>
+        <a href="index.html#auth" class="bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">Logout</a>
+      </nav>
     </div>
-
-    <!--TOMBOL HAMBURGER (mobile only) -->
-    <label for="nav-toggle" class="md:hidden cursor-pointer px-3 py-2 border rounded font-bold text-green-600">
-      ☰
-    </label>
-    <input type="checkbox" id="nav-toggle" class="hidden peer" />
-
-    <!-- NAV MENU -->
-    <nav class="flex flex-col absolute top-[64px] right-4 bg-white shadow-md rounded-xl p-4 gap-3 text-slate-700
-                w-48 opacity-0 pointer-events-none scale-95 transition-all duration-200
-                peer-checked:opacity-100 peer-checked:pointer-events-auto peer-checked:scale-100
-                md:static md:flex-row md:p-0 md:bg-transparent md:shadow-none md:w-auto md:opacity-100 md:pointer-events-auto md:scale-100 md:items-center md:ml-auto">
-
-      <a href="index.html" class="px-4 py-2 hover:text-green-600">Beranda</a>
-      <a href="profile.html" class="px-4 py-2 hover:text-green-600">Profil Pengguna</a>
-      <a href="progres.html" class="px-4 py-2 text-green-600 font-semibold">Progress</a>
-      <a href="resep.html" class="px-4 py-2 hover:text-green-600">Resep Makanan</a>
-      <a href="index.html#testimoni" class="px-4 py-2 hover:text-green-600">Testimoni</a>
-      <a href="index.html#auth"class=" bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">
-      Logout</a>
-    </nav>
-
-  </div>
-</header>
+  </header>
 
   <section class="pt-28 pb-10 max-w-5xl mx-auto px-4">
     <h2 class="text-3xl font-bold mb-6 text-center">Progress Diet Kamu</h2>
 
+    <?php if(isset($_GET['success'])): ?>
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+      ✅ Progress berhasil ditambahkan!
+    </div>
+    <?php endif; ?>
+
+    <?php if(isset($_GET['error'])): ?>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      ❌ Gagal menambahkan progress. Coba lagi.
+    </div>
+    <?php endif; ?>
+
     <div class="bg-white p-6 rounded-xl shadow-md mb-6">
       <h3 class="text-xl font-semibold mb-2">Program Diet Kamu</h3>
       <p><strong>Plan:</strong> Defisit kalori, tinggi protein & serat</p>
-      <p><strong>Goal:</strong> <?php echo $goal; ?></p>
-      <p><strong>Jangka Waktu:</strong> 3 Bulan</p>
+      <p><strong>Goal:</strong> <?php echo htmlspecialchars($goal); ?></p>
+      <p><strong>Jangka Waktu:</strong> 6 Bulan (180 Hari)</p>
     </div>
 
+    <!-- Progress Bar dengan data real dari database -->
     <div class="bg-emerald-50 p-6 rounded-2xl shadow-inner mb-6">
       <h2 class="font-semibold mb-3">Ringkasan Progress</h2>
       <div class="mb-3">
         <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-          <div class="bg-emerald-500 h-4 w-[40%] transition-all"></div>
+          <div class="bg-emerald-500 h-4 transition-all duration-500" style="width: <?php echo $progress_percentage; ?>%"></div>
         </div>
-        <div class="mt-2 text-sm text-gray-600">Progress: 40% – 12 hari dari 30 hari program</div>
+        <div class="mt-2 text-sm text-gray-600">
+          Progress: <?php echo $progress_percentage; ?>% – <?php echo $total_days_tracked; ?> hari dari <?php echo $target_days; ?> hari program
+        </div>
       </div>
-      <div class="text-sm text-gray-700"><strong>Goal:</strong> <?php echo $goal; ?> <br/><strong>Method:</strong> Diet Seimbang + Olahraga Teratur <br/><strong>Plan (profile):</strong> Defisit 500 kkal/hari</div>
+      <div class="text-sm text-gray-700">
+        <strong>Goal:</strong> <?php echo htmlspecialchars($goal); ?> <br/>
+        <strong>Method:</strong> Diet Seimbang + Olahraga Teratur <br/>
+        <strong>Plan (profile):</strong> Defisit 500 kkal/hari
+      </div>
     </div>
 
     <!-- JADWAL OLAHRAGA BERDASARKAN GOAL -->
@@ -227,33 +257,43 @@ $goal = "Muscular"; // Bisa diambil dari session/database user
       ?>
     </div>
 
+    <!-- FORM TRACKING -->
     <div class="bg-white p-6 rounded-xl shadow-md mb-6">
       <h3 class="text-xl font-semibold mb-3">Tracking Harian</h3>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        <div>
-          <h4 class="font-semibold mb-2">📸 Upload Bukti Olahraga</h4>
-          <input type="file" class="w-full border p-2 rounded-lg" required />
-        </div>
+      <form action="simpan_progress.php" method="POST" enctype="multipart/form-data">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-semibold mb-2">📸 Upload Bukti Olahraga</h4>
+            <input type="file" name="foto_olahraga" accept="image/*" class="w-full border p-2 rounded-lg" required />
+          </div>
 
-        <div>
-          <h4 class="font-semibold mb-2">🍱 Upload Foto Makanan</h4>
-          <input type="file" class="w-full border p-2 rounded-lg" required />
-        </div>
+          <div>
+            <h4 class="font-semibold mb-2">🍱 Upload Foto Makanan</h4>
+            <input type="file" name="foto_makanan" accept="image/*" class="w-full border p-2 rounded-lg" required />
+          </div>
 
-        <div>
-          <label class="block text-sm font-medium mb-1">Tanggal</label>
-          <input type="date" class="w-full border rounded px-3 py-2" required />
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Berat (kg)</label>
-          <input type="number" class="w-full border rounded px-3 py-2" required />
-        </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Tanggal</label>
+            <input type="date" name="tanggal" class="w-full border rounded px-3 py-2" required value="<?php echo date('Y-m-d'); ?>" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Berat (kg)</label>
+            <input type="number" name="berat" step="0.1" class="w-full border rounded px-3 py-2" placeholder="<?php echo $user['bb']; ?>" required />
+          </div>
 
-        <div class="md:col-span-2 text-right">
-          <button class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700">Tambah Aktivitas Hari Ini</button>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium mb-1">Catatan (opsional)</label>
+            <textarea name="catatan" rows="3" class="w-full border rounded px-3 py-2" placeholder="Contoh: Latihan hari ini terasa lebih mudah..."></textarea>
+          </div>
+
+          <div class="md:col-span-2 text-right">
+            <button type="submit" class="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 font-semibold">
+              Tambah Aktivitas Hari Ini
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   </section>
 
