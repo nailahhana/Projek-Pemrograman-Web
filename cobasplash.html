@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dietly — Welcome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* small extra CSS for animations */
+    .logo-appear {
+      animation: popIn 700ms cubic-bezier(.2,.9,.3,1) forwards;
+      transform-origin: center;
+      opacity: 0;
+      transform: scale(.6);
+    }
+    @keyframes popIn {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* bouncing SVG */
+    .floaty { animation: floaty 2400ms ease-in-out infinite; }
+    @keyframes floaty {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px) rotate(-1deg); }
+      100% { transform: translateY(0); }
+    }
+
+    /* progress step transition */
+    .step-enter { transform: translateX(12px); opacity:0; }
+    .step-enter-active { transform: translateX(0); opacity:1; transition: transform .32s, opacity .32s; }
+    .step-exit { transform: translateX(0); opacity:1; }
+    .step-exit-active { transform: translateX(-12px); opacity:0; transition: transform .24s, opacity .24s; }
+
+    /* small responsive tweak for mobile notch safe area */
+    .safe-top { padding-top: env(safe-area-inset-top); }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-slate-50 to-white min-h-screen flex items-center justify-center font-inter">
+
+<!-- MAIN WRAPPER (mobile only) -->
+<div id="app" class="w-full max-w-lg mx-auto px-4 safe-top">
+
+  <!-- 1) Splash screen -->
+  <section id="splash" class="min-h-screen flex flex-col items-center justify-center gap-6">
+    <!-- Logo circle -->
+    <div class="flex flex-col items-center">
+      <div id="logo" class="logo-appear bg-emerald-600 rounded-2xl w-28 h-28 flex items-center justify-center shadow-lg">
+        <div class="text-white font-bold text-2xl">D</div>
+      </div>
+      <div class="mt-3 text-center">
+        <div class="text-lg font-semibold">Dietly</div>
+        <div class="text-xs text-slate-500">Rencanakan dietmu dengan mudah</div>
+      </div>
+    </div>
+
+    <!-- small loader / hint -->
+    <div class="text-xs text-slate-400">Mempersiapkan pengalaman... ✨</div>
+
+    <!-- skip button -->
+    <button id="skipSplash" class="mt-6 px-4 py-2 text-sm rounded-full border border-slate-200 bg-white shadow-sm">
+      Lewati & Mulai
+    </button>
+  </section>
+
+  <!-- 2) Onboarding questionnaire (hidden initially) -->
+  <section id="onboard" class="hidden min-h-screen flex flex-col gap-6 py-6">
+
+    <!-- top card with animated illustration and title -->
+    <div class="bg-white rounded-2xl shadow p-4 flex items-center gap-3">
+      <div class="w-20 h-20 flex items-center justify-center bg-emerald-50 rounded-xl">
+        <!-- simple animated SVG illustration -->
+        <svg class="w-16 h-16 floaty" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="18" width="52" height="34" rx="6" fill="#10B981" opacity="0.12"/>
+          <path d="M18 40c1.5-4 4.5-6 8-6s6.5 2 8 6" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="26" cy="26" r="2.8" fill="#059669"/>
+          <circle cx="38" cy="26" r="2.8" fill="#059669"/>
+        </svg>
+      </div>
+      <div>
+        <div class="font-semibold">Bantu kita kenal kamu</div>
+        <div class="text-xs text-slate-500">Isi beberapa pertanyaan singkat untuk rekomendasi</div>
+      </div>
+    </div>
+
+    <!-- progress bar -->
+    <div class="w-full">
+      <div id="progressBar" class="h-2 bg-slate-200 rounded-full overflow-hidden">
+        <div id="progressFill" class="h-2 bg-emerald-600 w-0"></div>
+      </div>
+    </div>
+
+    <!-- Step container -->
+    <div id="steps" class="flex-1">
+
+      <!-- Step templates (we will show/hide them) -->
+
+      <!-- Step 0: name (text input) -->
+      <div class="step p-4 bg-white rounded-2xl shadow mb-4" data-step="0">
+        <div class="font-semibold mb-2">Siapa namamu?</div>
+        <input id="q_name" type="text" placeholder="Tulis namamu" class="w-full p-3 rounded border text-sm" />
+      </div>
+
+      <!-- Step 1: gender (radio) -->
+      <div class="step hidden p-4 bg-white rounded-2xl shadow mb-4" data-step="1">
+        <div class="font-semibold mb-2">Jenis kelamin</div>
+        <div class="flex gap-3">
+          <label class="flex-1">
+            <input type="radio" name="gender" value="male" class="sr-only peer" />
+            <div class="p-3 rounded-xl border peer-checked:bg-emerald-50 peer-checked:border-emerald-500 text-center">Laki-laki</div>
+          </label>
+          <label class="flex-1">
+            <input type="radio" name="gender" value="female" class="sr-only peer" />
+            <div class="p-3 rounded-xl border peer-checked:bg-emerald-50 peer-checked:border-emerald-500 text-center">Perempuan</div>
+          </label>
+          <label class="flex-1">
+            <input type="radio" name="gender" value="other" class="sr-only peer" />
+            <div class="p-3 rounded-xl border peer-checked:bg-emerald-50 peer-checked:border-emerald-500 text-center">Lainnya</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 2: age (range) -->
+      <div class="step hidden p-4 bg-white rounded-2xl shadow mb-4" data-step="2">
+        <div class="font-semibold mb-2">Berapa umurmu?</div>
+        <div class="flex items-center gap-4">
+          <input id="q_age" type="range" min="10" max="80" value="25" class="flex-1" />
+          <div id="q_age_val" class="w-14 text-right text-sm">25</div>
+        </div>
+      </div>
+
+      <!-- Step 3: height (range) -->
+      <div class="step hidden p-4 bg-white rounded-2xl shadow mb-4" data-step="3">
+        <div class="font-semibold mb-2">Tinggi badan (cm)</div>
+        <div class="flex items-center gap-4">
+          <input id="q_height" type="range" min="120" max="210" value="170" class="flex-1" />
+          <div id="q_height_val" class="w-14 text-right text-sm">170</div>
+        </div>
+      </div>
+
+      <!-- Step 4: weight (range) -->
+      <div class="step hidden p-4 bg-white rounded-2xl shadow mb-4" data-step="4">
+        <div class="font-semibold mb-2">Berat badan (kg)</div>
+        <div class="flex items-center gap-4">
+          <input id="q_weight" type="range" min="35" max="150" value="70" class="flex-1" />
+          <div id="q_weight_val" class="w-14 text-right text-sm">70</div>
+        </div>
+      </div>
+
+      <!-- Step 5: activity level (radio) -->
+      <div class="step hidden p-4 bg-white rounded-2xl shadow mb-4" data-step="5">
+        <div class="font-semibold mb-2">Seberapa aktif kamu?</div>
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-3 p-3 rounded-xl border peer-checked:bg-emerald-50">
+            <input type="radio" name="active" value="low" class="sr-only peer" />
+            <div class="font-medium">Kurang aktif (sedikit olahraga)</div>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border peer-checked:bg-emerald-50">
+            <input type="radio" name="active" value="moderate" class="sr-only peer" />
+            <div class="font-medium">Cukup aktif (olahraga beberapa kali/minggu)</div>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl border peer-checked:bg-emerald-50">
+            <input type="radio" name="active" value="high" class="sr-only peer" />
+            <div class="font-medium">Sangat aktif (latihan intens tiap minggu)</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 6: goal (radio) -->
+      <div class="step hidden p-4 bg-white rounded-2xl shadow mb-4" data-step="6">
+        <div class="font-semibold mb-2">Apa tujuanmu?</div>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="p-3 rounded-xl border text-center">
+            <input type="radio" name="goal" value="lose" class="sr-only peer" />
+            <div class="peer-checked:bg-emerald-50">Menurunkan berat</div>
+          </label>
+          <label class="p-3 rounded-xl border text-center">
+            <input type="radio" name="goal" value="maintain" class="sr-only peer" />
+            <div class="peer-checked:bg-emerald-50">Menjaga berat</div>
+          </label>
+          <label class="p-3 rounded-xl border text-center">
+            <input type="radio" name="goal" value="gain" class="sr-only peer" />
+            <div class="peer-checked:bg-emerald-50">Menaikkan berat</div>
+          </label>
+          <label class="p-3 rounded-xl border text-center">
+            <input type="radio" name="goal" value="other" class="sr-only peer" />
+            <div class="peer-checked:bg-emerald-50">Lainnya</div>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- navigation buttons -->
+    <div class="flex items-center gap-3">
+      <button id="prevBtn" class="flex-1 px-4 py-3 rounded-lg border bg-white text-sm">Kembali</button>
+      <button id="nextBtn" class="flex-1 px-4 py-3 rounded-lg bg-emerald-600 text-white text-sm">Lanjut</button>
+    </div>
+
+    <!-- small note -->
+    <div class="text-xs text-slate-400 text-center pt-2">Hasil kuisoner digunakan hanya untuk rekomendasi plan.</div>
+  </section>
+
+</div>
+
+
+<script>
+    localStorage.removeItem('dietly_onboard_done');
+    localStorage.removeItem('dietly_onboard_data');
+  // App logic
+  (function(){
+    const splash = document.getElementById('splash');
+    const onboard = document.getElementById('onboard');
+    const skip = document.getElementById('skipSplash');
+    const stepsEl = Array.from(document.querySelectorAll('.step'));
+    const totalSteps = stepsEl.length;
+    const progressFill = document.getElementById('progressFill');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let current = 0;
+    let answers = {
+      name: '',
+      gender: '',
+      age: 25,
+      height: 170,
+      weight: 70,
+      active: '',
+      goal: ''
+    };
+
+    function showStep(index) {
+      stepsEl.forEach((el, i) => {
+        if (i === index) {
+          el.classList.remove('hidden');
+          el.classList.add('step-enter-active');
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('step-enter-active');
+        }
+      });
+      // progress
+      const pct = Math.round(((index) / (totalSteps - 1)) * 100);
+      progressFill.style.width = pct + '%';
+      // buttons
+      prevBtn.style.display = index === 0 ? 'none' : 'inline-flex';
+      nextBtn.textContent = index === totalSteps - 1 ? 'Selesai' : 'Lanjut';
+    }
+
+    // initial
+    showStep(current);
+
+    // splash auto proceed after animation (or skip)
+    function startOnboard() {
+      splash.classList.add('hidden');
+      onboard.classList.remove('hidden');
+      // animate progress to step 0
+      showStep(0);
+    }
+
+    // after 900ms show onboard automatically (simulate logo animation)
+    setTimeout(startOnboard, 900);
+
+    skip.addEventListener('click', startOnboard);
+
+    // step navigation
+    prevBtn.addEventListener('click', function(){
+      if (current > 0) current--;
+      showStep(current);
+    });
+
+    nextBtn.addEventListener('click', function(){
+      // validate current before moving on
+      if (!validateStep(current)) return;
+      if (current < totalSteps - 1) {
+        current++;
+        showStep(current);
+      } else {
+        // finish
+        finishOnboard();
+      }
+    });
+
+    // validations per step
+    function validateStep(idx) {
+      if (idx === 0) {
+        const name = document.getElementById('q_name').value.trim();
+        if (!name) {
+          alert('Isi nama dulu ya');
+          return false;
+        }
+        answers.name = name;
+      } else if (idx === 1) {
+        const g = document.querySelector('input[name="gender"]:checked');
+        if (!g) { alert('Pilih jenis kelamin'); return false; }
+        answers.gender = g.value;
+      } else if (idx === 2) {
+        // age stored on input event
+      } else if (idx === 3) {
+        // height
+      } else if (idx === 4) {
+        // weight
+      } else if (idx === 5) {
+        const a = document.querySelector('input[name="active"]:checked');
+        if (!a) { alert('Pilih level aktivitas'); return false; }
+        answers.active = a.value;
+      } else if (idx === 6) {
+        const gl = document.querySelector('input[name="goal"]:checked');
+        if (!gl) { alert('Pilih tujuan'); return false; }
+        answers.goal = gl.value;
+      }
+      return true;
+    }
+
+    // input bindings for ranges and text
+    document.getElementById('q_name').addEventListener('input', (e)=> answers.name = e.target.value);
+    const age = document.getElementById('q_age');
+    age.addEventListener('input', (e)=> {
+      answers.age = +e.target.value;
+      document.getElementById('q_age_val').textContent = e.target.value;
+    });
+    const height = document.getElementById('q_height');
+    height.addEventListener('input', (e)=> {
+      answers.height = +e.target.value;
+      document.getElementById('q_height_val').textContent = e.target.value;
+    });
+    const weight = document.getElementById('q_weight');
+    weight.addEventListener('input', (e)=> {
+      answers.weight = +e.target.value;
+      document.getElementById('q_weight_val').textContent = e.target.value;
+    });
+
+    // also set initial displayed values
+    document.getElementById('q_age_val').textContent = age.value;
+    document.getElementById('q_height_val').textContent = height.value;
+    document.getElementById('q_weight_val').textContent = weight.value;
+
+    function finishOnboard() {
+  // gather final radio answers if not captured already
+  const gEl = document.querySelector('input[name="gender"]:checked');
+  if (gEl) answers.gender = gEl.value;
+  const aEl = document.querySelector('input[name="active"]:checked');
+  if (aEl) answers.active = aEl.value;
+  const glEl = document.querySelector('input[name="goal"]:checked');
+  if (glEl) answers.goal = glEl.value;
+
+  // save to localStorage
+  try {
+    localStorage.setItem('dietly_onboard_done', '1');
+    localStorage.setItem('dietly_onboard_data', JSON.stringify(answers));
+  } catch(e) {
+    console.warn('localStorage error', e);
+  }
+
+  // feedback then redirect to index.html (relative path)
+  nextBtn.textContent = 'Menyimpan...';
+  nextBtn.disabled = true;
+
+  // small delay so user sees the feedback
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 600);
+}
+ // MOBILE = tampilkan splash → auto masuk kuisoner
+if (window.innerWidth < 768) {
+  splash.classList.remove("hidden");
+  onboard.classList.add("hidden");
+  setTimeout(startOnboard, 900);
+}
+// DESKTOP = skip splash → langsung kuisoner
+else {
+  splash.classList.add("hidden");
+  onboard.classList.remove("hidden");
+  showStep(0);
+}
+
+
+  // jika sudah pernah selesai, langsung ke index
+  const done = localStorage.getItem('dietly_onboard_done');
+  if (done === '1') {
+    setTimeout(()=> window.location.href = "index.html", 200);
+    return;
+  }
+  })();;
+ 
+</script>
+</body>
+</html>

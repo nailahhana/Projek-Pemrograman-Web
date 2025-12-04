@@ -11,7 +11,7 @@ $stmt = $conn->prepare($query_user);
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
-$goal = $user['goal'] ?? 'Muscular';
+$goal = $user['goal'] ?? 'Bulky';
 
 // Hitung jumlah hari yang sudah di-track dari tabel progres
 $query = "SELECT COUNT(DISTINCT tanggal) as total_days FROM progres WHERE email = ?";
