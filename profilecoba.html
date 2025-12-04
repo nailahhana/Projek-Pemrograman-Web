@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1, viewport-fit=cover"/>
+  <title>Profil Pengguna - Dietly</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+    /* Utilitas Scrollbar Sembunyi untuk Carousel */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Animasi Card Carousel */
+    .card { transform-origin: center; transition: all 0.3s ease; }
+    .card:not(.active) { transform: scale(0.95); opacity: 0.7; filter: blur(1px); }
+    .card.active { transform: scale(1.05); opacity: 1; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); border-color: #10b981; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 pb-28">
+
+  <header class="bg-white sticky top-0 z-30 pt-safe-top shadow-sm">
+    <div class="px-5 pt-4 pb-2 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-slate-800">Profile</h1>
+      <button class="p-2 bg-slate-100 rounded-full text-slate-600 hover:text-emerald-600 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex mt-2 border-b border-slate-200">
+      <div class="flex-1 text-center pb-3 border-b-2 border-emerald-500 cursor-pointer">
+        <span class="font-semibold text-emerald-600">Me</span>
+      </div>
+      <div class="flex-1 text-center pb-3 border-b-2 border-transparent text-slate-400 cursor-pointer hover:text-slate-600">
+        <span class="font-semibold">Buddies</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto px-4 pt-6 space-y-6">
+
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative overflow-hidden">
+      <input id="avatarInput" type="file" accept="image/*" class="hidden" />
+
+      <div class="flex items-start gap-4 mb-6">
+        <div class="relative group cursor-pointer" onclick="document.getElementById('avatarInput').click()">
+          <img id="avatarPreview" src="" alt="Avatar" class="w-20 h-20 rounded-full object-cover border-4 border-slate-50 shadow-md bg-slate-200">
+          <div class="absolute -bottom-1 -right-1 bg-yellow-400 text-[10px] font-bold px-2 py-0.5 rounded-full text-white border-2 border-white">PRO</div>
+          <div class="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </div>
+        </div>
+        
+        <div class="flex-1 min-w-0">
+          <h2 id="profileName" class="font-bold text-slate-800 text-lg truncate cursor-pointer hover:text-emerald-600 border-b border-dashed border-transparent hover:border-emerald-300 inline-block">
+            Nama Pengguna
+          </h2>
+          <div class="text-[10px] text-slate-400 mb-1">(Klik nama/foto untuk edit)</div>
+          
+          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-600 mt-1">
+            <span class="bg-slate-100 px-2 py-1 rounded-md">🎂 19 thn</span>
+            <span class="bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md font-medium">💪 Build muscle</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+        <div>
+          <p class="text-xs text-slate-400 mb-1">Cal left</p>
+          <p class="text-2xl font-bold text-slate-800">9.732</p>
+        </div>
+        <div class="text-right">
+          <p class="text-xs text-slate-400 mb-1">Steps</p>
+          <p class="text-2xl font-bold text-slate-800">0</p>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="flex justify-between items-end mb-3 px-1">
+        <h3 class="font-bold text-slate-800 text-lg">My Progress</h3>
+        <a href="progres.html" class="text-emerald-600 text-sm font-medium hover:underline">Analysis</a>
+      </div>
+
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
+        <h4 class="text-lg font-bold text-slate-800">You've gained 0 kg!</h4>
+        <p class="text-xs text-slate-400 mb-6">keep going until you reach your goal</p>
+
+        <div class="relative w-full h-3 bg-slate-100 rounded-full mb-2">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full shadow z-10"></div>
+          <div class="h-full bg-emerald-500 rounded-full opacity-20" style="width: 2%;"></div>
+          <div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-slate-200 rounded-full"></div>
+        </div>
+
+        <div class="flex justify-between text-xs font-semibold text-slate-700 mt-2">
+          <span>Start: 49 kg</span>
+          <span>Goal: 57 kg</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+        <div class="flex justify-between items-center mb-3 px-1">
+            <h3 class="font-bold text-slate-800 text-lg">My Goals</h3>
+            <button onclick="document.getElementById('editForm').classList.toggle('hidden')" class="text-emerald-600 text-sm font-medium bg-emerald-50 px-3 py-1 rounded-full">Edit Data</button>
+        </div>
+
+        <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-3 mb-4">
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span class="text-sm text-slate-700 flex-1">Goal Type</span>
+                <span class="text-sm font-semibold text-slate-900">Build Muscle</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span class="text-sm text-slate-700 flex-1">Current Weight</span>
+                <span class="text-sm font-semibold text-slate-900">49 kg</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                <span class="text-sm text-slate-700 flex-1">Target Calories</span>
+                <span class="text-sm font-semibold text-slate-900">9.732 kJ</span>
+            </div>
+        </div>
+
+        <div id="editForm" class="hidden bg-slate-100 rounded-2xl p-4 border border-slate-200 transition-all">
+            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Update Data Diri</h4>
+            <form class="grid grid-cols-1 gap-3">
+                <div>
+                    <label class="block text-xs font-medium mb-1">Pilih Goal</label>
+                    <select id="goalSelect" class="w-full text-sm border-gray-300 rounded-lg p-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <option value="lose">Lose Weight</option>
+                        <option value="maintain">Maintain Weight</option>
+                        <option value="gain">Gain Weight</option>
+                    </select>
+                    <input type="hidden" id="goalValue" name="goal">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium mb-1">Berat (kg)</label>
+                        <input type="number" class="w-full text-sm rounded-lg p-2 border border-gray-300" placeholder="49">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium mb-1">Tinggi (cm)</label>
+                        <input type="number" class="w-full text-sm rounded-lg p-2 border border-gray-300" placeholder="170">
+                    </div>
+                </div>
+                <button type="button" onclick="alert('Data tersimpan! (Simulasi)')" class="w-full bg-emerald-600 text-white py-2 rounded-lg text-sm font-semibold mt-2 shadow-md hover:bg-emerald-700">Simpan Perubahan</button>
+            </form>
+        </div>
+    </section>
+
+    <section>
+      <h3 class="font-bold text-slate-800 text-lg mb-3 px-1">Your Diet Plan</h3>
+      
+      <div class="relative">
+        <div id="carouselViewport" class="overflow-x-auto no-scrollbar py-4 -mx-4 px-4 scroll-smooth">
+          <div id="carouselTrack" class="flex gap-4 items-center w-max">
+            
+            <article class="card w-64 p-5 rounded-3xl bg-white border border-slate-100 shadow-sm flex flex-col justify-between h-40" data-index="0">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold">L</div>
+                <div>
+                  <div class="font-bold text-slate-800">Lahar</div>
+                  <div class="text-xs text-slate-400">Turun 4kg</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 italic">"Dietly bantu aku konsisten! Plan-nya enak."</p>
+            </article>
+
+            <article class="card w-64 p-5 rounded-3xl bg-white border border-slate-100 shadow-sm flex flex-col justify-between h-40" data-index="1">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">N</div>
+                <div>
+                  <div class="font-bold text-slate-800">Nopal</div>
+                  <div class="text-xs text-slate-400">Fitur Progress</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 italic">"Gampang dipakai, recommended banget."</p>
+            </article>
+
+            <article class="card w-64 p-5 rounded-3xl bg-white border border-slate-100 shadow-sm flex flex-col justify-between h-40" data-index="2">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">A</div>
+                <div>
+                  <div class="font-bold text-slate-800">Arya</div>
+                  <div class="text-xs text-slate-400">Konsisten</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 italic">"Fiturnya ngejaga motivasi gw tetep on track."</p>
+            </article>
+
+          </div>
+        </div>
+        
+        <div class="flex justify-center gap-4 mt-1">
+            <button id="prevBtn" class="text-slate-400 hover:text-emerald-600"><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+            <button id="nextBtn" class="text-slate-400 hover:text-emerald-600"><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="font-bold text-slate-800 text-lg mb-4 px-1">Automatic Tracking</h3>
+      <div class="grid grid-cols-4 gap-3">
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-16 h-16 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-pink-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" /></svg>
+          </div>
+          <span class="text-[10px] text-slate-500">Health</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-16 h-16 bg-teal-500 rounded-2xl shadow-sm flex items-center justify-center"><div class="grid grid-cols-3 gap-1 rotate-45"><div class="w-1 h-1 bg-white rounded-full"></div><div class="w-1 h-1 bg-white rounded-full"></div><div class="w-1 h-1 bg-white rounded-full opacity-50"></div><div class="w-1 h-1 bg-white rounded-full"></div><div class="w-1 h-1 bg-white rounded-full"></div><div class="w-1 h-1 bg-white rounded-full"></div></div></div>
+          <span class="text-[10px] text-slate-500">Fitbit</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-16 h-16 bg-slate-800 rounded-2xl shadow-sm flex items-center justify-center relative overflow-hidden"><div class="absolute top-1 left-2 text-[6px] text-blue-400 font-bold">GARMIN</div><div class="w-6 h-6 border-2 border-blue-500 rounded-tr-lg rounded-bl-lg border-t-0 border-l-0 rotate-45"></div></div>
+          <span class="text-[10px] text-slate-500">Garmin</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-16 h-16 bg-black rounded-2xl shadow-sm flex flex-col items-center justify-center"><span class="text-white font-bold text-[6px] tracking-widest">POLAR</span><span class="text-white font-thin text-xs">FLOW</span></div>
+          <span class="text-[10px] text-slate-500">Polar</span>
+        </div>
+      </div>
+
+      <button class="w-full mt-6 bg-white border border-emerald-100 py-3 rounded-2xl text-emerald-600 font-semibold flex items-center justify-center gap-2 shadow-sm hover:bg-emerald-50 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+        Recommend Dietly
+      </button>
+    </section>
+
+  </main>
+
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 z-40 pb-safe">
+    <div class="flex justify-between items-center px-6 py-3 max-w-md mx-auto">
+      <a href="index.html" class="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1 group-hover:-translate-y-1 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+        <span class="text-[10px]">Diary</span>
+      </a>
+      <a href="resep.html" class="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1 group-hover:-translate-y-1 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9M3 20h9M3 4h6v16H3z" /></svg>
+        <span class="text-[10px]">Recipes</span>
+      </a>
+      <a href="fasting.html" class="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1 group-hover:-translate-y-1 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span class="text-[10px]">Fasting</span>
+      </a>
+      <a href="profile.html" class="flex flex-col items-center text-emerald-600 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+        <span class="text-[10px] font-medium">Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // 1. LOGIC EDIT PROFILE (Foto & Nama) - Menggunakan LocalStorage
+    (function(){
+        const avatarPreview = document.getElementById('avatarPreview');
+        const avatarInput = document.getElementById('avatarInput');
+        const profileNameEl = document.getElementById('profileName');
+
+        // Restore Saved Data
+        const savedAvatar = localStorage.getItem('dietly_profile_avatar');
+        if (savedAvatar) {
+            avatarPreview.src = savedAvatar;
+        } else {
+            // Default placeholder jika belum ada foto
+            avatarPreview.src = 'https://ui-avatars.com/api/?name=User&background=10b981&color=fff';
+        }
+
+        const savedName = localStorage.getItem('dietly_profile_name');
+        if (savedName) profileNameEl.textContent = savedName;
+
+        // Handle File Upload
+        avatarInput.addEventListener('change', (e) => {
+            const f = e.target.files && e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const dataUrl = ev.target.result;
+                avatarPreview.src = dataUrl;
+                localStorage.setItem('dietly_profile_avatar', dataUrl);
+            };
+            reader.readAsDataURL(f);
+        });
+
+        // Handle Name Edit (Click to prompt)
+        profileNameEl.addEventListener('click', () => {
+            const current = profileNameEl.textContent.trim();
+            const newName = prompt('Ubah nama pengguna:', current);
+            if (newName) {
+                profileNameEl.textContent = newName;
+                localStorage.setItem('dietly_profile_name', newName);
+            }
+        });
+    })();
+
+    // 2. LOGIC GOAL SELECT (Dari kode original)
+    (function(){
+        const s = document.getElementById('goalSelect');
+        const h = document.getElementById('goalValue');
+        if(localStorage.goal) { s.value = localStorage.goal; h.value = localStorage.goal }
+        s.onchange = e => (h.value = e.target.value, localStorage.goal = e.target.value);
+    })();
+
+    // 3. LOGIC CAROUSEL (Diadaptasi sedikit agar lebih smooth)
+    (function(){
+        const vp = document.getElementById('carouselViewport');
+        const cards = Array.from(document.querySelectorAll('.card'));
+        const prev = document.getElementById('prevBtn');
+        const next = document.getElementById('nextBtn');
+        
+        let activeIndex = 0;
+
+        function updateCards(index) {
+            cards.forEach((c, idx) => {
+                c.classList.toggle('active', idx === index);
+            });
+            
+            // Scroll to center logic
+            const card = cards[index];
+            if(card) {
+                const cardRect = card.getBoundingClientRect();
+                const vpRect = vp.getBoundingClientRect();
+                const scrollLeft = vp.scrollLeft + cardRect.left - vpRect.left - (vpRect.width / 2) + (cardRect.width / 2);
+                
+                vp.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+            }
+            activeIndex = index;
+        }
+
+        prev.onclick = () => { if(activeIndex > 0) updateCards(activeIndex - 1); };
+        next.onclick = () => { if(activeIndex < cards.length - 1) updateCards(activeIndex + 1); };
+        
+        // Klik card untuk select
+        cards.forEach((c, idx) => c.onclick = () => updateCards(idx));
+
+        // Init
+        setTimeout(() => updateCards(0), 100);
+    })();
+  </script>
+</body>
+</html>
