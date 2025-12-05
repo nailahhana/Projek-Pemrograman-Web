@@ -5,7 +5,17 @@ require_once 'auth.php';
 // Cek login
 cek_login();
 
+<<<<<<< HEAD
 $id_pengguna = $_SESSION['id_pengguna'];
+=======
+// Ambil data user
+$query_user = "SELECT * FROM pengguna WHERE email = ?";
+$stmt = $conn->prepare($query_user);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+$goal = $user['goal'] ?? 'Bulky';
+>>>>>>> 68c21fb3a2745eb75aa2501828cd1e660657b85c
 
 // Get data pengguna
 $query = "SELECT * FROM pengguna WHERE id_pengguna = '$id_pengguna'";
