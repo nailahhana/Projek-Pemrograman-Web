@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2025 at 04:42 AM
+-- Generation Time: Dec 05, 2025 at 02:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,15 +24,46 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aktivitas`
+-- Table structure for table `admin`
 --
 
-CREATE TABLE `aktivitas` (
-  `id` int(11) NOT NULL,
-  `nama_aktivitas` varchar(150) NOT NULL,
-  `met` decimal(5,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `nama_admin` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `kata_sandi` varchar(255) NOT NULL,
+  `tanggal_dibuat` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `nama_admin`, `email`, `kata_sandi`, `tanggal_dibuat`) VALUES
+(1, 'Admin Dietly', 'admin@dietly.com', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2025-12-05 03:58:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategori_resep`
+--
+
+CREATE TABLE `kategori_resep` (
+  `id_kategori` int(11) NOT NULL,
+  `nama_kategori` varchar(50) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `ikon` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kategori_resep`
+--
+
+INSERT INTO `kategori_resep` (`id_kategori`, `nama_kategori`, `deskripsi`, `ikon`) VALUES
+(1, 'sarapan', 'Resep untuk menu sarapan sehat', '🌅'),
+(2, 'siang', 'Resep untuk menu makan siang', '☀️'),
+(3, 'malam', 'Resep untuk menu makan malam', '🌙'),
+(4, 'snack', 'Resep untuk camilan sehat', '🍪');
 
 -- --------------------------------------------------------
 
@@ -41,53 +72,53 @@ CREATE TABLE `aktivitas` (
 --
 
 CREATE TABLE `pengguna` (
-  `email` varchar(255) NOT NULL,
-  `nama` varchar(150) NOT NULL,
-  `umur` int(11) DEFAULT NULL,
-  `bb` decimal(5,2) DEFAULT NULL,
-  `tb` decimal(5,2) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `goal` varchar(50) DEFAULT NULL,
-  `bmi` decimal(5,2) DEFAULT NULL,
-  `plan_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id_pengguna` int(11) NOT NULL,
+  `nama_lengkap` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `kata_sandi` varchar(255) NOT NULL,
+  `usia` int(11) DEFAULT NULL,
+  `jenis_kelamin` enum('laki-laki','perempuan','lainnya') DEFAULT NULL,
+  `tinggi_badan` decimal(5,2) DEFAULT NULL,
+  `berat_badan` decimal(5,2) DEFAULT NULL,
+  `berat_target` decimal(5,2) DEFAULT NULL,
+  `bmi` decimal(4,2) DEFAULT NULL,
+  `level_aktivitas` enum('sedentary','light','moderate','active') DEFAULT NULL,
+  `tujuan_diet` enum('lose','maintain','gain') DEFAULT NULL,
+  `lokasi` varchar(100) DEFAULT NULL,
+  `foto_profil` varchar(255) DEFAULT NULL,
+  `tanggal_daftar` datetime DEFAULT current_timestamp(),
+  `tanggal_update` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pengguna`
+--
+
+INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `email`, `kata_sandi`, `usia`, `jenis_kelamin`, `tinggi_badan`, `berat_badan`, `berat_target`, `bmi`, `level_aktivitas`, `tujuan_diet`, `lokasi`, `foto_profil`, `tanggal_daftar`, `tanggal_update`) VALUES
+(1, 'Lahar', 'lahar@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 25, 'laki-laki', 175.00, 75.00, 70.00, 24.49, 'moderate', 'lose', 'Banguntapan, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
+(2, 'Nopal', 'nopal@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 28, 'laki-laki', 168.00, 72.00, 68.00, 25.51, 'light', 'lose', 'Bandung, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
+(3, 'Arya', 'arya@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 23, 'laki-laki', 172.00, 65.00, 70.00, 21.97, 'active', 'gain', 'Yogyakarta, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
+(4, '', 'iqbal@dietly.com', '$2y$10$ENdPVxI0TEQEUG/HpxTJpezVHVdmIo1xg8XjB6bmOwlJAiYRlNU2W', 0, '', 0.00, 0.00, 0.00, 0.00, '', '', '', NULL, '2025-12-05 07:42:17', '2025-12-05 07:42:17'),
+(5, 'Iqbal', 'iqbl@dietly.com', 'iqbal123', 19, 'laki-laki', 165.00, 49.00, 57.00, 18.00, 'sedentary', 'gain', 'Yogyakarta, Indonesia', NULL, '2025-12-05 08:06:41', '2025-12-05 08:06:41');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `plan`
+-- Table structure for table `program_diet`
 --
 
-CREATE TABLE `plan` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
+CREATE TABLE `program_diet` (
+  `id_program` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `nama_program` varchar(100) NOT NULL,
   `deskripsi` text DEFAULT NULL,
-  `durasi_hari` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `progres`
---
-
-CREATE TABLE `progres` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `plan_id` int(11) DEFAULT NULL,
-  `aktivitas` varchar(150) DEFAULT NULL,
-  `aktivitas_id` int(11) DEFAULT NULL,
-  `durasi` int(11) DEFAULT NULL,
-  `goal` varchar(50) DEFAULT NULL,
-  `tanggal` date DEFAULT curdate(),
-  `progress_score` decimal(7,2) DEFAULT NULL,
-  `catatan` text DEFAULT NULL,
-  `foto_olahraga` varchar(255) DEFAULT NULL,
-  `foto_makanan` varchar(255) DEFAULT NULL,
-  `berat` decimal(5,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `durasi_hari` int(11) NOT NULL,
+  `kalori_harian` int(11) DEFAULT NULL,
+  `protein_harian` int(11) DEFAULT NULL,
+  `tanggal_mulai` date DEFAULT NULL,
+  `tanggal_selesai` date DEFAULT NULL,
+  `status` enum('aktif','selesai','berhenti') DEFAULT 'aktif',
+  `tanggal_dibuat` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -97,13 +128,47 @@ CREATE TABLE `progres` (
 --
 
 CREATE TABLE `resep` (
-  `id` int(11) NOT NULL,
-  `nama_resep` varchar(200) NOT NULL,
-  `plan_id` int(11) DEFAULT NULL,
-  `bahan` text DEFAULT NULL,
-  `langkah` text DEFAULT NULL,
-  `kalori` decimal(7,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id_resep` int(11) NOT NULL,
+  `id_kategori` int(11) DEFAULT NULL,
+  `nama_resep` varchar(150) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `foto_resep` varchar(255) DEFAULT NULL,
+  `waktu_masak` int(11) DEFAULT NULL COMMENT 'dalam menit',
+  `porsi` int(11) DEFAULT 1,
+  `kalori` int(11) DEFAULT NULL,
+  `protein` int(11) DEFAULT NULL,
+  `karbohidrat` int(11) DEFAULT NULL,
+  `lemak` int(11) DEFAULT NULL,
+  `bahan_bahan` text DEFAULT NULL,
+  `cara_membuat` text DEFAULT NULL,
+  `tips` text DEFAULT NULL,
+  `tingkat_kesulitan` enum('mudah','sedang','sulit') DEFAULT 'mudah',
+  `tanggal_dibuat` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resep`
+--
+
+INSERT INTO `resep` (`id_resep`, `id_kategori`, `nama_resep`, `deskripsi`, `foto_resep`, `waktu_masak`, `porsi`, `kalori`, `protein`, `karbohidrat`, `lemak`, `bahan_bahan`, `cara_membuat`, `tips`, `tingkat_kesulitan`, `tanggal_dibuat`) VALUES
+(1, 1, 'Salad Ayam Panggang', 'Ayam panggang tanpa kulit, banyak sayur, dressing rendah lemak – cepat & segar.', 'https://img-global.cpcdn.com/recipes/d0332d1d08549744/600x852cq80/salad-ayam-panggang-kecap-pedas-dengan-wortel-dan-sayur-lain-buatnya-simpel-sederhana-untuk-diet-foto-resep-utama.webp', 20, 1, 350, 35, 25, 12, 'AYAM PANGGANG:|1 buah dada ayam|1 sdt kecap manis|1 buah cabai rawit (sesuai selera)|1/2 sdt kaldu jamur|1/4 sdt garam|1/8 sdt merica||SALAD SAYURAN:|1 genggam selada|1 genggam kol ungu|1 genggam jagung manis|1/2 genggam wortel|1/2 genggam biji labu panggang|2 sdm mayonaise wijen sangrai (Kewpie)', '1. Siapkan wortel, iris korek api.|2. Siapkan bahan lainnya. Iris tipis dada ayam menjadi 3 bagian agar bumbu lebih meresap dan matang rata. Potong-potong selada dan kol. Rebus jagung dan wortel.|3. Campurkan semua bumbu untuk ayam. Oleskan ke atas ayam. Marinasi minimal 30 menit atau bisa disiapkan malam sebelumnya dan simpan di kulkas.|4. Panggang ayam tanpa minyak (jika menggunakan frypan anti lengket yang sudah panas) atau bisa ditambah 1 sdm olive oil.|5. Campurkan sayuran dan ayam yang sudah matang. Siram dengan mayo wijen sangrai.|6. Selamat makan! Jangan lupa makan buah juga ya. 🍎', 'Marinasi ayam semalaman untuk hasil yang lebih lezat dan bumbu meresap sempurna. Gunakan pan anti lengket untuk mengurangi penggunaan minyak. Tambahkan lebih banyak sayuran sesuai selera untuk meningkatkan serat.', 'mudah', '2025-12-05 03:58:18'),
+(2, 2, 'Tumis Tahu Brokoli', 'Tahu + brokoli + bumbu ringan, tinggi serat dan protein nabati.', 'https://via.placeholder.com/400x300?text=Tumis+Tahu+Brokoli', 15, 1, 280, 18, 22, 14, 'Bahan:|1 buah tahu putih ukuran sedang|1 cup brokoli potong kecil|2 siung bawang putih cincang|1 sdm kecap asin|1/2 sdt minyak wijen|Garam dan merica secukupnya', '1. Potong tahu dadu, goreng sebentar hingga kecoklatan.|2. Rebus brokoli sebentar agar renyah.|3. Tumis bawang putih hingga harum.|4. Masukkan tahu dan brokoli, tambahkan bumbu.|5. Aduk rata dan sajikan.', 'Jangan terlalu lama memasak brokoli agar nutrisinya tetap terjaga.', 'mudah', '2025-12-05 03:58:18'),
+(3, 3, 'Chicken Breast Set', 'Dada ayam + nasi merah + telur rebus. Protein tinggi & karbo kompleks.', 'https://via.placeholder.com/400x300?text=Chicken+Breast+Set', 30, 1, 650, 55, 68, 18, 'Bahan:|1 buah dada ayam fillet|1 cup nasi merah|2 butir telur rebus|Bumbu: garam, merica, bawang putih bubuk|Sayuran pelengkap: brokoli/wortel', '1. Marinasi dada ayam dengan bumbu.|2. Panggang atau kukus ayam hingga matang.|3. Masak nasi merah hingga pulen.|4. Rebus telur hingga matang.|5. Susun semua bahan di piring dengan sayuran.', 'Pilih dada ayam tanpa kulit untuk mengurangi lemak.', 'sedang', '2025-12-05 03:58:18'),
+(4, 4, 'Smoothie Bowl Alpukat', 'Alpukat + pisang + oat. Smoothie bowl segar dan mengenyangkan.', 'https://via.placeholder.com/400x300?text=Smoothie+Bowl', 10, 1, 220, 6, 35, 8, 'Bahan:|1/2 buah alpukat|1 buah pisang beku|3 sdm oat|1/2 cup susu almond|Topping: granola, biji chia, buah segar', '1. Blender alpukat, pisang, oat, dan susu hingga halus.|2. Tuang ke mangkuk.|3. Tambahkan topping sesuai selera.|4. Sajikan segera.', 'Gunakan pisang beku untuk tekstur yang lebih creamy.', 'mudah', '2025-12-05 03:58:18'),
+(5, 1, 'Oatmeal Pisang Madu', 'Oat + pisang + madu + chia seed. Sarapan hangat dan sehat.', 'https://via.placeholder.com/400x300?text=Oatmeal', 8, 1, 310, 10, 52, 8, 'Bahan:|1/2 cup oat|1 cup susu rendah lemak|1 buah pisang iris|1 sdm madu|1 sdt chia seed|Kayu manis bubuk secukupnya', '1. Masak oat dengan susu hingga mengental.|2. Tambahkan pisang dan kayu manis.|3. Sajikan dengan madu dan chia seed di atasnya.', 'Tambahkan kacang-kacangan untuk protein ekstra.', 'mudah', '2025-12-05 03:58:18'),
+(6, 2, 'Sup Sayur Bening', 'Wortel + jagung + tomat + daun bawang. Hangat dan rendah kalori.', 'https://via.placeholder.com/400x300?text=Sup+Sayur', 25, 1, 180, 8, 28, 5, 'Bahan:|1 buah wortel potong dadu|1/2 cup jagung manis|2 buah tomat potong|2 batang daun bawang iris|Kaldu ayam/sayur secukupnya|Garam dan merica', '1. Rebus air dengan kaldu.|2. Masukkan wortel dan jagung.|3. Tambahkan tomat dan daun bawang.|4. Bumbui dengan garam dan merica.|5. Masak hingga semua sayur matang.', 'Tambahkan ayam suwir untuk protein lebih tinggi.', 'mudah', '2025-12-05 03:58:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resep_tersimpan`
+--
+
+CREATE TABLE `resep_tersimpan` (
+  `id_simpan` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `id_resep` int(11) NOT NULL,
+  `tanggal_disimpan` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -113,11 +178,43 @@ CREATE TABLE `resep` (
 --
 
 CREATE TABLE `testimoni` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `teks` text NOT NULL,
-  `approved` tinyint(1) DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id_testimoni` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `isi_testimoni` text NOT NULL,
+  `penurunan_berat` decimal(5,2) DEFAULT NULL,
+  `durasi` varchar(50) DEFAULT NULL,
+  `status_tampil` enum('aktif','tidak_aktif') DEFAULT 'aktif',
+  `tanggal_dibuat` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `testimoni`
+--
+
+INSERT INTO `testimoni` (`id_testimoni`, `id_pengguna`, `isi_testimoni`, `penurunan_berat`, `durasi`, `status_tampil`, `tanggal_dibuat`) VALUES
+(1, 1, 'Dietly bantu aku konsisten! Dalam 2 bulan turun 4 kg.', 4.00, '2 bulan', 'aktif', '2025-12-05 03:58:18'),
+(2, 2, 'Fitur progressnya gampang dipakai, recommended.', 3.50, '1.5 bulan', 'aktif', '2025-12-05 03:58:18'),
+(3, 3, 'Fitur nya ngejaga motivasi gw, biar tetep konsisten dengan plan dietnya.', 5.00, '3 bulan', 'aktif', '2025-12-05 03:58:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tracking_harian`
+--
+
+CREATE TABLE `tracking_harian` (
+  `id_tracking` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `id_program` int(11) DEFAULT NULL,
+  `tanggal_tracking` date NOT NULL,
+  `berat_badan` decimal(5,2) DEFAULT NULL,
+  `foto_olahraga` varchar(255) DEFAULT NULL,
+  `foto_sarapan` varchar(255) DEFAULT NULL,
+  `foto_makan_siang` varchar(255) DEFAULT NULL,
+  `foto_makan_malam` varchar(255) DEFAULT NULL,
+  `catatan` text DEFAULT NULL,
+  `status_lengkap` enum('lengkap','tidak_lengkap') DEFAULT 'tidak_lengkap',
+  `tanggal_dibuat` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -125,111 +222,149 @@ CREATE TABLE `testimoni` (
 --
 
 --
--- Indexes for table `aktivitas`
+-- Indexes for table `admin`
 --
-ALTER TABLE `aktivitas`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `kategori_resep`
+--
+ALTER TABLE `kategori_resep`
+  ADD PRIMARY KEY (`id_kategori`);
 
 --
 -- Indexes for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  ADD PRIMARY KEY (`email`),
-  ADD KEY `plan_id` (`plan_id`);
+  ADD PRIMARY KEY (`id_pengguna`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `plan`
+-- Indexes for table `program_diet`
 --
-ALTER TABLE `plan`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `progres`
---
-ALTER TABLE `progres`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_progres_aktivitas` (`aktivitas_id`),
-  ADD KEY `idx_progres_email` (`email`),
-  ADD KEY `idx_progres_tanggal` (`tanggal`),
-  ADD KEY `idx_progres_plan` (`plan_id`);
+ALTER TABLE `program_diet`
+  ADD PRIMARY KEY (`id_program`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
 
 --
 -- Indexes for table `resep`
 --
 ALTER TABLE `resep`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_resep_plan` (`plan_id`);
+  ADD PRIMARY KEY (`id_resep`),
+  ADD KEY `id_kategori` (`id_kategori`);
+
+--
+-- Indexes for table `resep_tersimpan`
+--
+ALTER TABLE `resep_tersimpan`
+  ADD PRIMARY KEY (`id_simpan`),
+  ADD UNIQUE KEY `unique_saved` (`id_pengguna`,`id_resep`),
+  ADD KEY `id_resep` (`id_resep`);
 
 --
 -- Indexes for table `testimoni`
 --
 ALTER TABLE `testimoni`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_testimoni_email` (`email`);
+  ADD PRIMARY KEY (`id_testimoni`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
+
+--
+-- Indexes for table `tracking_harian`
+--
+ALTER TABLE `tracking_harian`
+  ADD PRIMARY KEY (`id_tracking`),
+  ADD UNIQUE KEY `unique_tracking` (`id_pengguna`,`tanggal_tracking`),
+  ADD KEY `id_program` (`id_program`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `aktivitas`
+-- AUTO_INCREMENT for table `admin`
 --
-ALTER TABLE `aktivitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `plan`
+-- AUTO_INCREMENT for table `kategori_resep`
 --
-ALTER TABLE `plan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `kategori_resep`
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `progres`
+-- AUTO_INCREMENT for table `pengguna`
 --
-ALTER TABLE `progres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `pengguna`
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `program_diet`
+--
+ALTER TABLE `program_diet`
+  MODIFY `id_program` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `resep`
 --
 ALTER TABLE `resep`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `resep_tersimpan`
+--
+ALTER TABLE `resep_tersimpan`
+  MODIFY `id_simpan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `testimoni`
 --
 ALTER TABLE `testimoni`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_testimoni` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tracking_harian`
+--
+ALTER TABLE `tracking_harian`
+  MODIFY `id_tracking` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `pengguna`
+-- Constraints for table `program_diet`
 --
-ALTER TABLE `pengguna`
-  ADD CONSTRAINT `pengguna_ibfk_1` FOREIGN KEY (`plan_id`) REFERENCES `plan` (`id`);
-
---
--- Constraints for table `progres`
---
-ALTER TABLE `progres`
-  ADD CONSTRAINT `fk_progres_aktivitas` FOREIGN KEY (`aktivitas_id`) REFERENCES `aktivitas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_progres_pengguna` FOREIGN KEY (`email`) REFERENCES `pengguna` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_progres_plan` FOREIGN KEY (`plan_id`) REFERENCES `plan` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `program_diet`
+  ADD CONSTRAINT `program_diet_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `resep`
 --
 ALTER TABLE `resep`
-  ADD CONSTRAINT `fk_resep_plan` FOREIGN KEY (`plan_id`) REFERENCES `plan` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `resep_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_resep` (`id_kategori`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `resep_tersimpan`
+--
+ALTER TABLE `resep_tersimpan`
+  ADD CONSTRAINT `resep_tersimpan_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE,
+  ADD CONSTRAINT `resep_tersimpan_ibfk_2` FOREIGN KEY (`id_resep`) REFERENCES `resep` (`id_resep`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `testimoni`
 --
 ALTER TABLE `testimoni`
-  ADD CONSTRAINT `fk_testimoni_pengguna` FOREIGN KEY (`email`) REFERENCES `pengguna` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `testimoni_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tracking_harian`
+--
+ALTER TABLE `tracking_harian`
+  ADD CONSTRAINT `tracking_harian_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tracking_harian_ibfk_2` FOREIGN KEY (`id_program`) REFERENCES `program_diet` (`id_program`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
