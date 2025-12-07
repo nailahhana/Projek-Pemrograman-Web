@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2025 at 02:09 AM
+-- Generation Time: Dec 07, 2025 at 03:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama_admin`, `email`, `kata_sandi`, `tanggal_dibuat`) VALUES
-(1, 'Admin Dietly', 'admin@dietly.com', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '2025-12-05 03:58:18');
+(2, 'Admin Dietly', 'admin@dietly.com', 'admin123', '2025-12-07 19:39:41');
 
 -- --------------------------------------------------------
 
@@ -95,11 +95,10 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `email`, `kata_sandi`, `usia`, `jenis_kelamin`, `tinggi_badan`, `berat_badan`, `berat_target`, `bmi`, `level_aktivitas`, `tujuan_diet`, `lokasi`, `foto_profil`, `tanggal_daftar`, `tanggal_update`) VALUES
-(1, 'Lahar', 'lahar@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 25, 'laki-laki', 175.00, 75.00, 70.00, 24.49, 'moderate', 'lose', 'Banguntapan, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
-(2, 'Nopal', 'nopal@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 28, 'laki-laki', 168.00, 72.00, 68.00, 25.51, 'light', 'lose', 'Bandung, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
-(3, 'Arya', 'arya@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 23, 'laki-laki', 172.00, 65.00, 70.00, 21.97, 'active', 'gain', 'Yogyakarta, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
-(4, '', 'iqbal@dietly.com', '$2y$10$ENdPVxI0TEQEUG/HpxTJpezVHVdmIo1xg8XjB6bmOwlJAiYRlNU2W', 0, '', 0.00, 0.00, 0.00, 0.00, '', '', '', NULL, '2025-12-05 07:42:17', '2025-12-05 07:42:17'),
-(5, 'Iqbal', 'iqbl@dietly.com', 'iqbal123', 19, 'laki-laki', 165.00, 49.00, 57.00, 18.00, 'sedentary', 'gain', 'Yogyakarta, Indonesia', NULL, '2025-12-05 08:06:41', '2025-12-05 08:06:41');
+(1, 'Lahar', 'lahar@gmail.com', 'lahar123', 25, 'laki-laki', 175.00, 75.00, 70.00, 24.49, 'moderate', 'lose', 'Banguntapan, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
+(2, 'Nopal', 'nopal@gmail.com', 'nopal123', 28, 'laki-laki', 168.00, 72.00, 68.00, 25.51, 'light', 'lose', 'Bandung, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
+(3, 'Arya', 'arya@gmail.com', 'arya123', 23, 'laki-laki', 172.00, 65.00, 70.00, 21.97, 'active', 'gain', 'Yogyakarta, Indonesia', NULL, '2025-12-05 03:58:18', '2025-12-05 03:58:18'),
+(4, 'IQBAL WAHYU PRATAMA', 'asdfasdgo@gmail.com', 'akuhebat123', 14, 'laki-laki', 159.00, 0.20, 35.00, 11.87, 'sedentary', 'lose', 'YOggadsg, INdonadfa', NULL, '2025-12-05 08:31:02', '2025-12-05 08:32:07');
 
 -- --------------------------------------------------------
 
@@ -151,7 +150,7 @@ CREATE TABLE `resep` (
 --
 
 INSERT INTO `resep` (`id_resep`, `id_kategori`, `nama_resep`, `deskripsi`, `foto_resep`, `waktu_masak`, `porsi`, `kalori`, `protein`, `karbohidrat`, `lemak`, `bahan_bahan`, `cara_membuat`, `tips`, `tingkat_kesulitan`, `tanggal_dibuat`) VALUES
-(1, 1, 'Salad Ayam Panggang', 'Ayam panggang tanpa kulit, banyak sayur, dressing rendah lemak – cepat & segar.', 'https://img-global.cpcdn.com/recipes/d0332d1d08549744/600x852cq80/salad-ayam-panggang-kecap-pedas-dengan-wortel-dan-sayur-lain-buatnya-simpel-sederhana-untuk-diet-foto-resep-utama.webp', 20, 1, 350, 35, 25, 12, 'AYAM PANGGANG:|1 buah dada ayam|1 sdt kecap manis|1 buah cabai rawit (sesuai selera)|1/2 sdt kaldu jamur|1/4 sdt garam|1/8 sdt merica||SALAD SAYURAN:|1 genggam selada|1 genggam kol ungu|1 genggam jagung manis|1/2 genggam wortel|1/2 genggam biji labu panggang|2 sdm mayonaise wijen sangrai (Kewpie)', '1. Siapkan wortel, iris korek api.|2. Siapkan bahan lainnya. Iris tipis dada ayam menjadi 3 bagian agar bumbu lebih meresap dan matang rata. Potong-potong selada dan kol. Rebus jagung dan wortel.|3. Campurkan semua bumbu untuk ayam. Oleskan ke atas ayam. Marinasi minimal 30 menit atau bisa disiapkan malam sebelumnya dan simpan di kulkas.|4. Panggang ayam tanpa minyak (jika menggunakan frypan anti lengket yang sudah panas) atau bisa ditambah 1 sdm olive oil.|5. Campurkan sayuran dan ayam yang sudah matang. Siram dengan mayo wijen sangrai.|6. Selamat makan! Jangan lupa makan buah juga ya. 🍎', 'Marinasi ayam semalaman untuk hasil yang lebih lezat dan bumbu meresap sempurna. Gunakan pan anti lengket untuk mengurangi penggunaan minyak. Tambahkan lebih banyak sayuran sesuai selera untuk meningkatkan serat.', 'mudah', '2025-12-05 03:58:18'),
+(1, 1, 'Salad Ayam Panggang', 'Ayam panggang tanpa kulit, banyak sayur, dressing rendah lemak – cepat & segar.', 'https://img-global.cpcdn.com/recipes/d0332d1d08549744/600x852cq80/salad-ayam-panggang-kecap-pedas-dengan-wortel-dan-sayur-lain-buatnya-simpel-sederhana-untuk-diet-foto-resep-utama.webp', 20, 1, 350, 35, 25, 12, 'AYAM PANGGANG:|1 buah dada ayam|1 sdt kecap manis|1 buah cabai rawit (sesuai selera)|1/2 sdt kaldu jamur|1/4 sdt garam|1/8 sdt merica||SALAD SAYURAN:|1 genggam selada|1 genggam kol ungu|1 genggam jagung manis|1/2 genggam wortel|1/2 genggam biji labu panggang|2 sdm mayonaise wijen sangrai (Kewpie)', '1. Siapkan wortel, iris korek api.|2. Siapkan bahan lainnya. Iris tipis dada ayam menjadi 3 bagian agar bumbu lebih meresap dan matang rata. Potong-potong selada dan kol. Rebus jagung dan wortel.|3. Campurkan semua bumbu untuk ayam. Oleskan ke atas ayam. Marinasi minimal 30 menit atau bisa disiapkan malam sebelumnya dan simpan di kulkas.|4. Panggang ayam tanpa minyak (jika menggunakan frypan anti lengket yang sudah panas) atau bisa ditambah 1 sdm olive oil.|5. Campurkan sayuran dan ayam yang sudah matang. Siram dengan mayo wijen sangrai.|6. Selamat makan! Jangan lupa makan buah juga ya. 🎉', 'Marinasi ayam semalaman untuk hasil yang lebih lezat dan bumbu meresap sempurna. Gunakan pan anti lengket untuk mengurangi penggunaan minyak. Tambahkan lebih banyak sayuran sesuai selera untuk meningkatkan serat.', 'mudah', '2025-12-05 03:58:18'),
 (2, 2, 'Tumis Tahu Brokoli', 'Tahu + brokoli + bumbu ringan, tinggi serat dan protein nabati.', 'https://via.placeholder.com/400x300?text=Tumis+Tahu+Brokoli', 15, 1, 280, 18, 22, 14, 'Bahan:|1 buah tahu putih ukuran sedang|1 cup brokoli potong kecil|2 siung bawang putih cincang|1 sdm kecap asin|1/2 sdt minyak wijen|Garam dan merica secukupnya', '1. Potong tahu dadu, goreng sebentar hingga kecoklatan.|2. Rebus brokoli sebentar agar renyah.|3. Tumis bawang putih hingga harum.|4. Masukkan tahu dan brokoli, tambahkan bumbu.|5. Aduk rata dan sajikan.', 'Jangan terlalu lama memasak brokoli agar nutrisinya tetap terjaga.', 'mudah', '2025-12-05 03:58:18'),
 (3, 3, 'Chicken Breast Set', 'Dada ayam + nasi merah + telur rebus. Protein tinggi & karbo kompleks.', 'https://via.placeholder.com/400x300?text=Chicken+Breast+Set', 30, 1, 650, 55, 68, 18, 'Bahan:|1 buah dada ayam fillet|1 cup nasi merah|2 butir telur rebus|Bumbu: garam, merica, bawang putih bubuk|Sayuran pelengkap: brokoli/wortel', '1. Marinasi dada ayam dengan bumbu.|2. Panggang atau kukus ayam hingga matang.|3. Masak nasi merah hingga pulen.|4. Rebus telur hingga matang.|5. Susun semua bahan di piring dengan sayuran.', 'Pilih dada ayam tanpa kulit untuk mengurangi lemak.', 'sedang', '2025-12-05 03:58:18'),
 (4, 4, 'Smoothie Bowl Alpukat', 'Alpukat + pisang + oat. Smoothie bowl segar dan mengenyangkan.', 'https://via.placeholder.com/400x300?text=Smoothie+Bowl', 10, 1, 220, 6, 35, 8, 'Bahan:|1/2 buah alpukat|1 buah pisang beku|3 sdm oat|1/2 cup susu almond|Topping: granola, biji chia, buah segar', '1. Blender alpukat, pisang, oat, dan susu hingga halus.|2. Tuang ke mangkuk.|3. Tambahkan topping sesuai selera.|4. Sajikan segera.', 'Gunakan pisang beku untuk tekstur yang lebih creamy.', 'mudah', '2025-12-05 03:58:18'),
@@ -216,6 +215,13 @@ CREATE TABLE `tracking_harian` (
   `status_lengkap` enum('lengkap','tidak_lengkap') DEFAULT 'tidak_lengkap',
   `tanggal_dibuat` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tracking_harian`
+--
+
+INSERT INTO `tracking_harian` (`id_tracking`, `id_pengguna`, `id_program`, `tanggal_tracking`, `berat_badan`, `foto_olahraga`, `foto_sarapan`, `foto_makan_siang`, `foto_makan_malam`, `catatan`, `status_lengkap`, `tanggal_dibuat`) VALUES
+(1, 4, NULL, '2025-12-05', 0.20, 'uploads/tracking/6932361761e43_1764898327.jpeg', '', '', '', '', 'tidak_lengkap', '2025-12-05 08:32:07');
 
 --
 -- Indexes for dumped tables
@@ -286,7 +292,7 @@ ALTER TABLE `tracking_harian`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `kategori_resep`
@@ -298,7 +304,7 @@ ALTER TABLE `kategori_resep`
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `program_diet`
@@ -328,7 +334,7 @@ ALTER TABLE `testimoni`
 -- AUTO_INCREMENT for table `tracking_harian`
 --
 ALTER TABLE `tracking_harian`
-  MODIFY `id_tracking` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tracking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
