@@ -15,27 +15,30 @@ $pengguna = mysqli_fetch_assoc($result);
 // Get pesan
 $pesan = get_pesan();
 
-// Hitung progress (contoh sederhana)
+// PERBAIKAN: Hitung progress dengan benar
+// Berat awal = berat_badan dari tabel pengguna (tetap)
 $berat_awal = $pengguna['berat_badan'];
 $berat_target = $pengguna['berat_target'];
-$berat_sekarang = $pengguna['berat_badan'];
 
-// Get tracking terakhir
+// Get tracking terakhir untuk berat sekarang
 $query_tracking = "SELECT berat_badan FROM tracking_harian 
                    WHERE id_pengguna = '$id_pengguna' 
                    ORDER BY tanggal_tracking DESC LIMIT 1";
 $result_tracking = mysqli_query($koneksi, $query_tracking);
+
+$berat_sekarang = $berat_awal; // Default ke berat awal
 if (mysqli_num_rows($result_tracking) > 0) {
     $tracking = mysqli_fetch_assoc($result_tracking);
     $berat_sekarang = $tracking['berat_badan'];
 }
 
 $selisih_berat = $berat_sekarang - $berat_awal;
-$target_perubahan = $berat_target - $berat_awal;
+$target_perubahan = abs($berat_target - $berat_awal);
 $progress_persen = 0;
-if ($target_perubahan != 0) {
-    $progress_persen = abs(($selisih_berat / $target_perubahan) * 100);
-    $progress_persen = min(100, max(0, $progress_persen));
+
+if ($target_perubahan > 0) {
+    $progress_persen = (abs($selisih_berat) / $target_perubahan) * 100;
+    $progress_persen = min(100, max(0, round($progress_persen)));
 }
 
 // Tentukan nama tujuan diet
@@ -88,7 +91,7 @@ $avatar_url = $pengguna['foto_profil'] ? $pengguna['foto_profil'] : 'https://ui-
         <a href="profile.php" class="px-3 py-2 text-emerald-600 font-semibold rounded">Profil</a>
         <a href="progres.php" class="px-3 py-2 rounded hover:text-emerald-600">Progress</a>
         <a href="resep.php" class="px-3 py-2 rounded hover:text-emerald-600">Resep</a>
-        <a href="resep-tersimpan.php" class="px-3 py-2 rounded hover:text-emerald-600">Resep Tersimpan</a>
+        <a href="resep-tersimpan.php" class="px-3 py-2 rounded hover:text-emerald-600">Tersimpan</a>
         <form method="POST" action="auth.php" class="inline">
           <input type="hidden" name="aksi" value="logout">
           <button type="submit" class="ml-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">Logout</button>
@@ -140,8 +143,8 @@ $avatar_url = $pengguna['foto_profil'] ? $pengguna['foto_profil'] : 'https://ui-
           <p class="text-2xl font-bold text-slate-800"><?php echo $pengguna['tinggi_badan']; ?> cm</p>
         </div>
         <div>
-          <p class="text-xs text-slate-400 mb-1">Berat</p>
-          <p class="text-2xl font-bold text-slate-800"><?php echo $pengguna['berat_badan']; ?> kg</p>
+          <p class="text-xs text-slate-400 mb-1">Berat Awal</p>
+          <p class="text-2xl font-bold text-slate-800"><?php echo $berat_awal; ?> kg</p>
         </div>
       </div>
     </div>
@@ -155,7 +158,13 @@ $avatar_url = $pengguna['foto_profil'] ? $pengguna['foto_profil'] : 'https://ui-
 
       <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
         <h4 class="text-lg font-bold text-slate-800">
-          Kamu sudah <?php echo $selisih_berat >= 0 ? 'naik' : 'turun'; ?> <?php echo abs($selisih_berat); ?> kg!
+          <?php if ($pengguna['tujuan_diet'] == 'lose'): ?>
+            Kamu sudah turun <?php echo abs($selisih_berat); ?> kg!
+          <?php elseif ($pengguna['tujuan_diet'] == 'gain'): ?>
+            Kamu sudah naik <?php echo abs($selisih_berat); ?> kg!
+          <?php else: ?>
+            Pertahankan berat badanmu!
+          <?php endif; ?>
         </h4>
         <p class="text-xs text-slate-400 mb-6">terus semangat sampai mencapai target</p>
 
@@ -167,7 +176,15 @@ $avatar_url = $pengguna['foto_profil'] ? $pengguna['foto_profil'] : 'https://ui-
 
         <div class="flex justify-between text-xs font-semibold text-slate-700 mt-2">
           <span>Start: <?php echo $berat_awal; ?> kg</span>
+          <span>Now: <?php echo $berat_sekarang; ?> kg</span>
           <span>Goal: <?php echo $berat_target; ?> kg</span>
+        </div>
+        
+        <div class="mt-4 text-sm text-slate-600">
+          <p>Progress: <strong class="text-emerald-600"><?php echo $progress_persen; ?>%</strong></p>
+          <p class="text-xs text-slate-500 mt-1">
+            Sisa <?php echo abs($berat_target - $berat_sekarang); ?> kg lagi untuk mencapai target!
+          </p>
         </div>
       </div>
     </section>
@@ -186,6 +203,11 @@ $avatar_url = $pengguna['foto_profil'] ? $pengguna['foto_profil'] : 'https://ui-
         </div>
         <div class="flex items-center gap-3">
           <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+          <span class="text-sm text-slate-700 flex-1">Berat Awal</span>
+          <span class="text-sm font-semibold text-slate-900"><?php echo $berat_awal; ?> kg</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-purple-500"></span>
           <span class="text-sm text-slate-700 flex-1">Berat Sekarang</span>
           <span class="text-sm font-semibold text-slate-900"><?php echo $berat_sekarang; ?> kg</span>
         </div>
@@ -221,8 +243,9 @@ $avatar_url = $pengguna['foto_profil'] ? $pengguna['foto_profil'] : 'https://ui-
               <input type="number" name="tinggi_badan" value="<?php echo $pengguna['tinggi_badan']; ?>" class="w-full text-sm rounded-lg p-2 border border-gray-300" required>
             </div>
             <div>
-              <label class="block text-xs font-medium mb-1">Berat (kg)</label>
+              <label class="block text-xs font-medium mb-1">Berat Awal (kg)</label>
               <input type="number" name="berat_badan" value="<?php echo $pengguna['berat_badan']; ?>" step="0.1" class="w-full text-sm rounded-lg p-2 border border-gray-300" required>
+              <p class="text-[10px] text-amber-600 mt-1">⚠️ Berat awal sebagai referensi</p>
             </div>
           </div>
           

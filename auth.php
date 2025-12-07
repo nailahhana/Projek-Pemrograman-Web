@@ -1,5 +1,5 @@
 <?php
-// auth.php - Handler untuk autentikasi (NO PASSWORD HASHING)
+// auth.php - Handler untuk autentikasi (NO PASSWORD HASHING - FIXED)
 require_once 'koneksi.php';
 
 // Cek apakah ada request POST
@@ -132,12 +132,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         redirect('index.php');
     }
     
-    // LOGIN ADMIN (PASSWORD PLAIT)
+    // LOGIN ADMIN (PASSWORD PLAIN - FIXED)
     elseif ($aksi == 'login_admin') {
         $email = bersihkan_input($_POST['email']);
         $kata_sandi = bersihkan_input($_POST['kata_sandi']);
         
-        // Cari admin dengan password plain text
+        // PERBAIKAN: Cari admin dengan password plain text (tidak di-hash)
         $query = "SELECT * FROM admin WHERE email = '$email' AND kata_sandi = '$kata_sandi'";
         $result = mysqli_query($koneksi, $query);
         
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['sudah_login'] = true;
             $_SESSION['id_admin'] = $admin['id_admin'];
             $_SESSION['nama_admin'] = $admin['nama_admin'];
-            $_SESSION['email'] = $admin['email'];
+            $_SESSION['email_admin'] = $admin['email'];
             $_SESSION['tipe_pengguna'] = 'admin';
             
             set_pesan('success', 'Login berhasil! Selamat datang, Admin!');

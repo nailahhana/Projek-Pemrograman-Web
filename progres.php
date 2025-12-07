@@ -5,17 +5,7 @@ require_once 'auth.php';
 // Cek login
 cek_login();
 
-<<<<<<< HEAD
 $id_pengguna = $_SESSION['id_pengguna'];
-=======
-// Ambil data user
-$query_user = "SELECT * FROM pengguna WHERE email = ?";
-$stmt = $conn->prepare($query_user);
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
-$goal = $user['goal'] ?? 'Bulky';
->>>>>>> 68c21fb3a2745eb75aa2501828cd1e660657b85c
 
 // Get data pengguna
 $query = "SELECT * FROM pengguna WHERE id_pengguna = '$id_pengguna'";
@@ -35,27 +25,30 @@ $query_tracking = "SELECT * FROM tracking_harian
                    ORDER BY tanggal_tracking DESC LIMIT 10";
 $result_tracking = mysqli_query($koneksi, $query_tracking);
 
-// Hitung progress
+// PERBAIKAN: Hitung progress dengan benar
+// Berat awal = berat_badan dari tabel pengguna (tetap)
 $berat_awal = $pengguna['berat_badan'];
 $berat_target = $pengguna['berat_target'];
 
-// Get berat terkini dari tracking terakhir
+// Berat terkini = berat_badan dari tracking terakhir
 $query_berat_terkini = "SELECT berat_badan FROM tracking_harian 
                         WHERE id_pengguna = '$id_pengguna' 
                         ORDER BY tanggal_tracking DESC LIMIT 1";
 $result_berat = mysqli_query($koneksi, $query_berat_terkini);
-$berat_sekarang = $berat_awal;
+
+$berat_sekarang = $berat_awal; // Default ke berat awal jika belum ada tracking
 if (mysqli_num_rows($result_berat) > 0) {
     $data_berat = mysqli_fetch_assoc($result_berat);
     $berat_sekarang = $data_berat['berat_badan'];
 }
 
 // Hitung persentase progress
-$target_perubahan = $berat_target - $berat_awal;
-$perubahan_saat_ini = $berat_sekarang - $berat_awal;
+$target_perubahan = abs($berat_target - $berat_awal);
+$perubahan_saat_ini = abs($berat_sekarang - $berat_awal);
 $progress_persen = 0;
-if ($target_perubahan != 0) {
-    $progress_persen = abs(($perubahan_saat_ini / $target_perubahan) * 100);
+
+if ($target_perubahan > 0) {
+    $progress_persen = ($perubahan_saat_ini / $target_perubahan) * 100;
     $progress_persen = min(100, max(0, round($progress_persen)));
 }
 
@@ -121,7 +114,7 @@ $tanggal_hari_ini = date('Y-m-d');
         <a href="profile.php" class="px-3 py-2 rounded hover:text-emerald-600">Profil</a>
         <a href="progres.php" class="px-3 py-2 text-emerald-600 font-semibold rounded">Progress</a>
         <a href="resep.php" class="px-3 py-2 rounded hover:text-emerald-600">Resep</a>
-        <a href="resep-tersimpan.php" class="px-3 py-2 rounded hover:text-emerald-600">Resep Tersimpan</a>
+        <a href="resep-tersimpan.php" class="px-3 py-2 rounded hover:text-emerald-600">Tersimpan</a>
         <form method="POST" action="auth.php" class="inline">
           <input type="hidden" name="aksi" value="logout">
           <button type="submit" class="ml-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">Logout</button>
@@ -150,7 +143,7 @@ $tanggal_hari_ini = date('Y-m-d');
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3v18M4 12v6m14-10v10" />
           </svg>
-          <span class="text-xs">Progress</span>
+          <span class="text-xs font-medium">Progress</span>
         </a>
         <a href="resep.php" class="w-full py-2 flex flex-col items-center justify-center text-slate-700 hover:text-emerald-600">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -230,7 +223,13 @@ $tanggal_hari_ini = date('Y-m-d');
           <div class="w-full bg-white/30 rounded-full h-3 overflow-hidden">
             <div class="bg-white h-3 transition-all duration-500" style="width: <?php echo $progress_persen; ?>%"></div>
           </div>
-          <p class="text-xs opacity-80 mt-2"><?php echo $hari_progress; ?> hari dari <?php echo $total_hari; ?> hari program</p>
+          <p class="text-xs opacity-80 mt-2">
+            <?php if ($program): ?>
+              <?php echo $hari_progress; ?> hari dari <?php echo $total_hari; ?> hari program
+            <?php else: ?>
+              Belum ada program diet aktif
+            <?php endif; ?>
+          </p>
         </div>
 
         <div class="grid grid-cols-3 gap-4">
@@ -246,6 +245,23 @@ $tanggal_hari_ini = date('Y-m-d');
             <p class="text-2xl font-bold"><?php echo $berat_target; ?> kg</p>
             <p class="text-xs opacity-80">Target</p>
           </div>
+        </div>
+        
+        <!-- Progress Info -->
+        <div class="mt-4 pt-4 border-t border-white/20">
+          <?php 
+          $selisih = $berat_sekarang - $berat_awal;
+          $sisa = $berat_target - $berat_sekarang;
+          ?>
+          <p class="text-sm">
+            <?php if ($pengguna['tujuan_diet'] == 'lose'): ?>
+              📉 Kamu sudah turun <strong><?php echo abs($selisih); ?> kg</strong>, sisa <strong><?php echo abs($sisa); ?> kg</strong> lagi!
+            <?php elseif ($pengguna['tujuan_diet'] == 'gain'): ?>
+              📈 Kamu sudah naik <strong><?php echo abs($selisih); ?> kg</strong>, sisa <strong><?php echo abs($sisa); ?> kg</strong> lagi!
+            <?php else: ?>
+              ⚖️ Pertahankan berat badanmu di kisaran target!
+            <?php endif; ?>
+          </p>
         </div>
       </section>
 

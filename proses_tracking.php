@@ -1,5 +1,5 @@
 <?php
-// proses_tracking.php - Handler untuk tracking harian
+// proses_tracking.php - Handler untuk tracking harian (FIXED)
 require_once 'koneksi.php';
 require_once 'auth.php';
 
@@ -89,9 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     if (mysqli_query($koneksi, $query)) {
-        // Update berat badan di tabel pengguna (berat terkini)
-        $update_berat = "UPDATE pengguna SET berat_badan = '$berat_badan' WHERE id_pengguna = '$id_pengguna'";
-        mysqli_query($koneksi, $update_berat);
+        // PERBAIKAN: Jangan update berat_badan di tabel pengguna
+        // Berat awal tetap tersimpan, berat terkini diambil dari tracking_harian
         
         set_pesan('success', $pesan_sukses . ' Terus semangat! 💪');
     } else {

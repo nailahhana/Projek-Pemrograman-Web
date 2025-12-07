@@ -2,7 +2,7 @@
 require_once 'koneksi.php';
 
 // Jika sudah login sebagai admin, redirect ke dashboard
-if (isset($_SESSION['sudah_login']) && $_SESSION['tipe_pengguna'] == 'admin') {
+if (isset($_SESSION['sudah_login']) && isset($_SESSION['tipe_pengguna']) && $_SESSION['tipe_pengguna'] == 'admin') {
     redirect('admin-dashboard.php');
 }
 
@@ -54,7 +54,7 @@ $pesan = get_pesan();
         <p class="text-slate-600 text-sm mt-2">Masuk ke dashboard administrator</p>
       </div>
 
-      <!-- Login Form -->
+      <!-- Login Form - PERBAIKAN NAMA FIELD -->
       <form method="POST" action="auth.php" class="space-y-4">
         <input type="hidden" name="aksi" value="login_admin">
         
@@ -62,7 +62,7 @@ $pesan = get_pesan();
           <label class="block text-sm font-medium text-slate-700 mb-2">Email Admin</label>
           <input 
             type="email" 
-            name="email_admin" 
+            name="email" 
             placeholder="admin@dietly.com"
             required
             class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none"
@@ -73,7 +73,7 @@ $pesan = get_pesan();
           <label class="block text-sm font-medium text-slate-700 mb-2">Password</label>
           <input 
             type="password" 
-            name="kata_sandi_admin" 
+            name="kata_sandi" 
             placeholder="••••••••"
             required
             class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none"
