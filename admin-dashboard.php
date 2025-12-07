@@ -25,9 +25,15 @@ $query_tracking_hari_ini = "SELECT COUNT(*) as total FROM tracking_harian WHERE 
 $result_tracking = mysqli_query($koneksi, $query_tracking_hari_ini);
 $tracking_hari_ini = mysqli_fetch_assoc($result_tracking)['total'];
 
-// Get pengguna terbaru (5 terakhir)
-$query_pengguna_baru = "SELECT * FROM pengguna ORDER BY tanggal_daftar DESC LIMIT 5";
-$result_pengguna_baru = mysqli_query($koneksi, $query_pengguna_baru);
+// Get resep tersimpan total
+$query_resep_tersimpan = "SELECT COUNT(*) as total FROM resep_tersimpan";
+$result_resep_tersimpan = mysqli_query($koneksi, $query_resep_tersimpan);
+$resep_tersimpan_total = mysqli_fetch_assoc($result_resep_tersimpan)['total'];
+
+// Get testimoni total
+$query_testimoni = "SELECT COUNT(*) as total FROM testimoni";
+$result_testimoni_count = mysqli_query($koneksi, $query_testimoni);
+$testimoni_total = mysqli_fetch_assoc($result_testimoni_count)['total'];
 
 // Get pesan
 $pesan = get_pesan();
@@ -66,21 +72,27 @@ $pesan = get_pesan();
         <p class="text-xs text-slate-400 mt-1">Administrator Panel</p>
       </div>
       
-      <nav class="flex-1 p-4 space-y-2">
+      <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
         <a href="admin-dashboard.php" class="block px-4 py-3 bg-emerald-600 rounded-lg font-medium">
           📊 Dashboard
         </a>
-        <a href="#users" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
-          👥 Users
+        <a href="admin-users.php" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
+          👥 Kelola Pengguna
         </a>
-        <a href="#recipes" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
-          🍽️ Recipes
+        <a href="admin-resep.php" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
+          🍽️ Kelola Resep
         </a>
-        <a href="#analytics" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
-          📈 Analytics
+        <a href="admin-tracking.php" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
+          📈 Tracking Pengguna
         </a>
-        <a href="#settings" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
-          ⚙️ Settings
+        <a href="admin-testimoni.php" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
+          💬 Testimoni
+        </a>
+        <a href="admin-files.php" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
+          📁 File Manager
+        </a>
+        <a href="admin-settings.php" class="block px-4 py-3 hover:bg-slate-800 rounded-lg">
+          ⚙️ Pengaturan
         </a>
       </nav>
       
@@ -128,7 +140,7 @@ $pesan = get_pesan();
       <div class="p-8">
         
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div class="bg-white rounded-xl shadow p-6">
             <div class="flex items-center justify-between mb-2">
               <p class="text-sm text-slate-600">Total Users</p>
@@ -166,65 +178,98 @@ $pesan = get_pesan();
           </div>
         </div>
 
-        <!-- Recent Activity & User Table -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
-          <!-- Recent Users -->
-          <div class="bg-white rounded-xl shadow">
-            <div class="p-6 border-b border-slate-200">
-              <h3 class="text-lg font-bold text-slate-800">Pengguna Terbaru</h3>
+        <!-- Additional Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow p-6 text-white">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-sm opacity-90">Resep Tersimpan</p>
+              <span class="text-2xl">🔖</span>
             </div>
-            <div class="p-6">
-              <div class="space-y-4">
-                <?php while ($pengguna = mysqli_fetch_assoc($result_pengguna_baru)): ?>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-                      <span class="font-bold text-emerald-600"><?php echo strtoupper(substr($pengguna['nama_lengkap'], 0, 1)); ?></span>
-                    </div>
-                    <div>
-                      <p class="font-medium text-slate-800"><?php echo $pengguna['nama_lengkap']; ?></p>
-                      <p class="text-xs text-slate-500"><?php echo $pengguna['email']; ?></p>
-                    </div>
-                  </div>
-                  <span class="text-xs text-slate-500"><?php echo format_tanggal($pengguna['tanggal_daftar']); ?></span>
-                </div>
-                <?php endwhile; ?>
-              </div>
-              
-              <button class="w-full mt-4 px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
-                View All Users
-              </button>
-            </div>
+            <p class="text-3xl font-bold"><?php echo $resep_tersimpan_total; ?></p>
+            <p class="text-xs opacity-80 mt-2">Total bookmark resep</p>
           </div>
 
-          <!-- Quick Actions -->
+          <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow p-6 text-white">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-sm opacity-90">Testimoni</p>
+              <span class="text-2xl">💬</span>
+            </div>
+            <p class="text-3xl font-bold"><?php echo $testimoni_total; ?></p>
+            <p class="text-xs opacity-80 mt-2">Total testimoni pengguna</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow p-6 text-white">
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-sm opacity-90">Kategori Resep</p>
+              <span class="text-2xl">📚</span>
+            </div>
+            <p class="text-3xl font-bold">4</p>
+            <p class="text-xs opacity-80 mt-2">Sarapan, Siang, Malam, Snack</p>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Quick Actions Card -->
           <div class="bg-white rounded-xl shadow">
             <div class="p-6 border-b border-slate-200">
               <h3 class="text-lg font-bold text-slate-800">Quick Actions</h3>
             </div>
             <div class="p-6">
               <div class="space-y-3">
-                <button class="w-full px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-medium hover:bg-emerald-100 transition text-left flex items-center gap-3">
+                <a href="admin-resep.php?action=add" class="block w-full px-4 py-3 bg-emerald-50 text-emerald-700 rounded-lg font-medium hover:bg-emerald-100 transition text-left flex items-center gap-3">
                   <span class="text-xl">➕</span>
-                  <span>Add New Recipe</span>
-                </button>
+                  <span>Tambah Resep Baru</span>
+                </a>
 
-                <button class="w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium hover:bg-blue-100 transition text-left flex items-center gap-3">
-                  <span class="text-xl">📧</span>
-                  <span>Send Newsletter</span>
-                </button>
+                <a href="admin-users.php" class="block w-full px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium hover:bg-blue-100 transition text-left flex items-center gap-3">
+                  <span class="text-xl">👥</span>
+                  <span>Kelola Pengguna</span>
+                </a>
 
-                <button class="w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-medium hover:bg-purple-100 transition text-left flex items-center gap-3">
+                <a href="admin-tracking.php" class="block w-full px-4 py-3 bg-purple-50 text-purple-700 rounded-lg font-medium hover:bg-purple-100 transition text-left flex items-center gap-3">
                   <span class="text-xl">📊</span>
-                  <span>Generate Report</span>
-                </button>
+                  <span>Lihat Tracking</span>
+                </a>
 
-                <button class="w-full px-4 py-3 bg-orange-50 text-orange-700 rounded-lg font-medium hover:bg-orange-100 transition text-left flex items-center gap-3">
-                  <span class="text-xl">⚙️</span>
-                  <span>System Settings</span>
-                </button>
+                <a href="admin-files.php" class="block w-full px-4 py-3 bg-orange-50 text-orange-700 rounded-lg font-medium hover:bg-orange-100 transition text-left flex items-center gap-3">
+                  <span class="text-xl">📁</span>
+                  <span>File Manager</span>
+                </a>
               </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="bg-white rounded-xl shadow">
+            <div class="p-6 border-b border-slate-200">
+              <h3 class="text-lg font-bold text-slate-800">Aktivitas Terbaru</h3>
+            </div>
+            <div class="p-6">
+              <div class="space-y-4">
+                <?php
+                // Get recent users
+                $query_recent = "SELECT nama_lengkap, tanggal_daftar FROM pengguna ORDER BY tanggal_daftar DESC LIMIT 5";
+                $result_recent = mysqli_query($koneksi, $query_recent);
+                while ($user = mysqli_fetch_assoc($result_recent)):
+                ?>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                    <span class="font-bold text-emerald-600"><?php echo strtoupper(substr($user['nama_lengkap'], 0, 1)); ?></span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-medium text-slate-800 text-sm"><?php echo $user['nama_lengkap']; ?></p>
+                    <p class="text-xs text-slate-500">Bergabung <?php echo format_tanggal($user['tanggal_daftar']); ?></p>
+                  </div>
+                  <span class="text-emerald-600 text-xs">New</span>
+                </div>
+                <?php endwhile; ?>
+              </div>
+              
+              <a href="admin-users.php" class="w-full mt-4 px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition block text-center">
+                Lihat Semua Pengguna
+              </a>
             </div>
           </div>
 
@@ -260,9 +305,9 @@ $pesan = get_pesan();
   </div>
 
   <script>
-    // Simulated real-time updates
+    // Auto refresh stats setiap 30 detik
     setInterval(function() {
-      console.log('Checking for updates...');
+      location.reload();
     }, 30000);
   </script>
 
